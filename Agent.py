@@ -228,8 +228,10 @@ tools = [
         "function": {
             "name": "fetch_wikipedia_content",
             "description": (
-            "Search Wikipedia and fetch the introduction of the most relevant article. "
-            "Always use this if the user is asking for something that is most likely on wikipedia. almost everything is on Wikipedia "
+            "Search Wikipedia and fetch the extract of the article with the best match for the query. "
+            "Always use this if the user is asking for something that is most likely on wikipedia"
+            "Use this when the user asks for more info on a specific topic"
+            "Use this when the information the user is asking for is unclear"
             "If the user has a typo in their search query, correct it before searching."
         ),
             "parameters": {
