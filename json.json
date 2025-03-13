@@ -1,0 +1,2 @@
+{
+    'role': 'assistant', 'tool_calls': [{'id': '166540506', 'type': 'function', 'function': ChoiceDeltaToolCallFunction(arguments='{"search_query": "types of cats"}', name='fetch_wikipedia_content')}, {'id': '684964297', 'type': 'function', 'function': ChoiceDeltaToolCallFunction(arguments='{}', name='get_current_time')}]}

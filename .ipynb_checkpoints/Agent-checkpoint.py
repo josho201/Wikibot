@@ -111,7 +111,7 @@ def fetch_wikipedia_content(search_query: str) -> dict:
             exlimit=max&
         """
         url = f"{search_url}?{urllib.parse.urlencode(search_params)}"
-        
+        print(url)
         with urllib.request.urlopen(url) as response:
             search_data = json.loads(response.read().decode())
         
@@ -130,7 +130,7 @@ def fetch_wikipedia_content(search_query: str) -> dict:
             content += pages[key]["title"] + "\n"
             content += pages[key]["extract"] + "\n"
 
-       
+        print(content)
         return {
             "status": "success",
             "content": content,
@@ -141,7 +141,6 @@ def fetch_wikipedia_content(search_query: str) -> dict:
         
 
     except Exception as e:
-        print("error fetching wiki", e)
         return {"status": "error", "message": str(e)}
 
 
@@ -247,64 +246,62 @@ tools = [
 ]
 
 
-def process_tool_calls(final_tool_calls, messages):
-    
+def process_tool_calls(response, messages):
+    """Process multiple tool calls and return the final response and updated messages"""
+    # Get all tool calls from the response
+    tool_calls = response.choices[0].message.tool_calls
 
     # Create the assistant message with tool calls
     assistant_tool_call_message = {
         "role": "assistant",
         "tool_calls": [
             {
-                "id": final_tool_calls[key].id,
-                "type": final_tool_calls[key].type,
-                "function": {
-                    "arguments": final_tool_calls[key].function.arguments,
-                    "name": final_tool_calls[key].function.name,
-                },
+                "id": tool_call.id,
+                "type": tool_call.type,
+                "function": tool_call.function,
             }
-            for key in final_tool_calls.keys()
+            for tool_call in tool_calls
         ],
     }
 
-    # print( "_ assistant_tool_call_message:  ",assistant_tool_call_message)
+    # Add the assistant's tool call message to the history
+    messages.append(assistant_tool_call_message)
 
+    # Process each tool call and collect results
     tool_results = []
-    for tool_call in assistant_tool_call_message["tool_calls"]:
-        arguments = json.loads(tool_call["function"]["arguments"])
-        name = tool_call["function"]["name"]
+    for tool_call in tool_calls:
+        # For functions with no arguments, use empty dict
+        arguments = (
+            json.loads(tool_call.function.arguments)
+            if tool_call.function.arguments.strip()
+            else {}
+        )
 
         # Determine which function to call based on the tool call name
-        if name == "open_safe_url":
+        if tool_call.function.name == "open_safe_url":
             result = open_safe_url(arguments["url"])
-
-        elif name == "get_current_time":
+        elif tool_call.function.name == "get_current_time":
             result = get_current_time()
-
-        elif name == "analyze_directory":
+        elif tool_call.function.name == "analyze_directory":
             path = arguments.get("path", ".")
             result = analyze_directory(path)
-
-        elif name == "fetch_wikipedia_content":
+        elif tool_call.function.name == "fetch_wikipedia_content":
 
             search_query = arguments["search_query"]
-            print(f"Looking for {search_query} on wikipedia... ")
             result = fetch_wikipedia_content(search_query)
             terminal_width = shutil.get_terminal_size().columns
-            #print("\n" + "=" * terminal_width)
-        
+            print("\n" + "=" * terminal_width)
+
             if result["status"] == "success":
-                print(f"Found results for {search_query} at {result['title']}")
-                """
                 print(f"\nWikipedia article: {result['title']}")
                 print("-" * terminal_width)
                 print(result["content"])
-                """
             else:
                 print(
                 f"\nError fetching content: {result['message']}"
                 )
         
-            
+            print("\n" + "=" * terminal_width)
         else:
             # llm tried to call a function that doesn't exist, skip
             continue
@@ -313,14 +310,21 @@ def process_tool_calls(final_tool_calls, messages):
         tool_result_message = {
             "role": "tool",
             "content": json.dumps(result),
-            "tool_call_id": tool_call["id"],
+            "tool_call_id": tool_call.id,
         }
         tool_results.append(tool_result_message)
         messages.append(tool_result_message)
-    
 
-    return messages
-    
+        
+    # Get the final response
+    final_response = client.chat.completions.create(
+        model=model,
+        messages=messages,
+    )
+
+
+    return final_response
+
 
 def chat():
     messages = [
@@ -355,46 +359,57 @@ def chat():
                 tools=tools,
                 stream = True
             )
-            
+            """for chunk in stream:
+                print(chunk.choices[0].delta.tool_calls,"\n\n")"""
             
             final_tool_calls = {}
 
             for chunk in stream:
-                if chunk.choices[0].delta.tool_calls:
-                    #print("calling tools .... ")
-                    for tool_call in chunk.choices[0].delta.tool_calls or []:
-                        index = tool_call.index
+                for tool_call in chunk.choices[0].delta.tool_calls or []:
+                    index = tool_call.index
 
-                        if index not in final_tool_calls:
-                            final_tool_calls[index] = tool_call
+                    if index not in final_tool_calls:
+                        final_tool_calls[index] = tool_call
 
-                        final_tool_calls[index].function.arguments += tool_call.function.arguments
-                else:
-                    #print("No tools to be called ... ")
-                    print(chunk.choices[0].delta.content, end="", flush=True)
+                    final_tool_calls[index].function.arguments += tool_call.function.arguments
                     
-            
-                        
-
-            if len(final_tool_calls):      
-                #print("tool calling success... ")   
-                messages = process_tool_calls(final_tool_calls, messages)
-                stream = client.chat.completions.create(
-                model=model,
-                messages=messages,
-                stream = True
-                )
-                for chunk in stream:
-                    print(chunk.choices[0].delta.content, end="", flush=True)
-                    
-
-        
-
-                    
-            
+            print(final_tool_calls[0])
 
         except Exception as e:
-            print(e)
+            print(":cccc")
+
+            """
+
+            # Check if the response includes tool calls
+            if response.choices[0].message.tool_calls:
+                # Process all tool calls and get final response
+                final_response = process_tool_calls(response, messages)
+                print("\nAssistant:", final_response.choices[0].message.content)
+
+                # Add assistant's final response to messages
+                messages.append(
+                    {
+                        "role": "assistant",
+                        "content": final_response.choices[0].message.content,
+                    }
+                )
+            else:
+                # If no tool call, just print the response
+                print("\nAssistant:", response.choices[0].message.content)
+
+                # Add assistant's response to messages
+                messages.append(
+                    {
+                        "role": "assistant",
+                        "content": response.choices[0].message.content,
+                    }
+                )
+            
+        except Exception as e:
+            print(f"\nAn error occurred: {str(e)}")
+            exit(1)
+        """
+
 
 if __name__ == "__main__":
     chat()
