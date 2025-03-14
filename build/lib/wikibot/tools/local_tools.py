@@ -1,7 +1,5 @@
 import webbrowser
 import os
-from urllib.parse import urlparse
-from datetime import datetime
 
 def is_valid_url(url: str) -> bool:
 

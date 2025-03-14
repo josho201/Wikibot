@@ -1,7 +1,7 @@
-import json
 from datetime import datetime
-from openai import OpenAI
+from openai import OpenAI # type: ignore
 import shutil
+from wikibot.utils import process_tool_calls
 
 # Point to the local server
 client = OpenAI(base_url="http://192.168.5.108:1234/v1/", api_key="lm-studio")

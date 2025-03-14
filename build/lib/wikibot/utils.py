@@ -1,7 +1,6 @@
 from wikibot.tools.local_tools import open_safe_url,  get_current_time, analyze_directory
 from wikibot.tools.web_tools import fetch_wikipedia_content
-import json
-import shutil
+
 def process_tool_calls(final_tool_calls, messages):
     
 
