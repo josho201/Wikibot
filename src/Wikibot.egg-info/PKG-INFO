@@ -1,0 +1,24 @@
+Metadata-Version: 2.2
+Name: Wikibot
+Version: 0.0.1
+Summary: A small project for local tool ussage
+Author-email: Yahir Luna <j.luna2016@hotmail.com>
+Project-URL: Homepage, https://github.com/josho201/Wikibot/
+Project-URL: Issues, https://github.com/josho201/Wikibot/issues
+Classifier: Programming Language :: Python :: 3
+Classifier: Operating System :: OS Independent
+Classifier: License :: OSI Approved :: MIT License
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+
+# WIKIBOT
+
+This is a simple project for 
+[GitHub-flavored Markdown](https://guides.github.com/features/mastering-markdown/)
+local tool ussage with LLM´s
+
+TODO:
+- Gradio interface
+- Integrate image description
+- much more...
