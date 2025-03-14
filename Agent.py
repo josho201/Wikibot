@@ -11,7 +11,7 @@ import shutil
 import urllib.request
 
 # Point to the local server
-client = OpenAI(base_url="http://localhost:1234/v1", api_key="lm-studio")
+client = OpenAI(base_url="http://192.168.5.108:1234/v1/", api_key="lm-studio")
 model = "qwen2.5-7b-instruct-1m"
 
 
@@ -81,18 +81,20 @@ def get_current_time() -> dict:
         return {"status": "error", "message": str(e)}
 
 
-def fetch_wikipedia_content(search_query: str) -> dict:
+def fetch_wikipedia_content(search_query: str, lan:str) -> dict:
     """Fetches wikipedia content for a given search_query"""
     try:
         # Search for most relevant article
-        search_url = "https://en.wikipedia.org/w/api.php"
+        if lan == "es":
+            search_url = "https://es.wikipedia.org/w/api.php"
+        elif lan == "en":
+            search_url = "https://en.wikipedia.org/w/api.php"
         search_params = {
             
             "format": "json",
             "action": "query",
             "prop": "extracts",
             "generator": "search",
-            ""
             "gsrinterwiki": True,
             "gsrsearch": search_query,
             "gsrenablerewrites": False,
@@ -129,7 +131,7 @@ def fetch_wikipedia_content(search_query: str) -> dict:
         for key in keys:
             content += pages[key]["title"] + "\n"
             content += pages[key]["extract"] + "\n"
-
+        print(url)
        
         return {
             "status": "success",
@@ -190,7 +192,7 @@ tools = [
                         "description": "The URL to open",
                     },
                 },
-                "required": ["url"],
+                "required": ["url", "lan"],
             },
         },
     },
@@ -241,6 +243,10 @@ tools = [
                         "type": "string",
                         "description": "Search query for finding the Wikipedia article.",
                     },
+                    "lan": {
+                        "type": "string",
+                        "description": "Language tags for API. Currently supported: en,es",
+                    },
                 },
                 "required": ["search_query"],
             },
@@ -287,10 +293,10 @@ def process_tool_calls(final_tool_calls, messages):
             result = analyze_directory(path)
 
         elif name == "fetch_wikipedia_content":
-
+            lan = arguments["lan"]
             search_query = arguments["search_query"]
             print(f"Looking for {search_query} on wikipedia... ")
-            result = fetch_wikipedia_content(search_query)
+            result = fetch_wikipedia_content(search_query, lan)
             terminal_width = shutil.get_terminal_size().columns
             #print("\n" + "=" * terminal_width)
         
@@ -328,7 +334,11 @@ def chat():
     messages = [
         {
             "role": "system",
-            "content": "You are a helpful assistant that can open safe web links, tell the current time, and analyze directory contents. You can use multiple tools at once. Use these capabilities whenever they might be helpful.",
+            "content": "You are a helpful assistant that can open safe web links, "
+            "tell the current time, and analyze directory contents. "
+            "Hablas Español e Ingles "
+            "You can use multiple tools at once. Use these capabilities whenever they might be helpful."
+            f"the current date is {datetime.now().strftime("%Y-%m-%d %H:%M:%S %Z")}",
         }
     ]
 
@@ -345,6 +355,25 @@ def chat():
         if user_input.lower() == "quit":
             print("Assistant: Goodbye!")
             break
+        elif user_input.lower() == "clear":
+            print("Conversation Reset...")
+            print("-"*shutil.get_terminal_size().columns)
+            print(
+            "Assistant: Hello! I can help you open safe web links, "
+            "tell you the current time, and analyze directory contents. "
+            "What would you like me to do?"
+            )
+            messages = [
+            {
+                "role": "system",
+                "content": "You are a helpful assistant that can open safe web links, tell the current time, and analyze directory contents. You can use multiple tools at once. don't hesitate about these capabilities whenever they might be helpful.",
+            }
+            ]   
+            continue
+        elif(user_input.lower() == "msg"):
+            print(messages)
+            continue
+
 
         # Add user message to conversation
         messages.append({"role": "user", "content": user_input})
@@ -361,6 +390,8 @@ def chat():
             
             final_tool_calls = {}
 
+            assistant_msgs = ""
+
             for chunk in stream:
                 if chunk.choices[0].delta.tool_calls:
                     #print("calling tools .... ")
@@ -373,7 +404,9 @@ def chat():
                         final_tool_calls[index].function.arguments += tool_call.function.arguments
                 else:
                     #print("No tools to be called ... ")
-                    print(chunk.choices[0].delta.content, end="", flush=True)
+                    if chunk.choices[0].delta.content is not None:
+                        print(chunk.choices[0].delta.content, end="", flush=True)
+                        assistant_msgs +=  chunk.choices[0].delta.content
                     
             
                         
@@ -387,12 +420,15 @@ def chat():
                 stream = True
                 )
                 for chunk in stream:
-                    print(chunk.choices[0].delta.content, end="", flush=True)
-                    
+                    if chunk.choices[0].delta.content is not None:
+                        print(chunk.choices[0].delta.content, end="", flush=True)
+                        assistant_msgs +=  chunk.choices[0].delta.content
 
         
 
-                    
+            # Add user message to conversation
+            messages.append({"role": "assistant", "content": assistant_msgs})
+             
             
 
         except Exception as e:
