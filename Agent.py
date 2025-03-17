@@ -2,59 +2,19 @@ from datetime import datetime
 from openai import OpenAI # type: ignore
 import shutil
 from wikibot.utils import process_tool_calls
-
+import gradio as gr # type: ignore
+    
 # Point to the local server
-client = OpenAI(base_url="http://192.168.5.108:1234/v1/", api_key="lm-studio")
-model = "qwen2.5-7b-instruct-1m"
 
+client = OpenAI(base_url= "http://192.168.5.108:1234/v1", api_key="lm-studio")
+#client = OpenAI(base_url="http://192.168.5.108:1234/v1", api_key="lm-studio")
+
+model = "deepseek-r1-distill-llama-8b"
+model = "gemma-3-12b-it"
+model = "qwen2.5-7b-instruct"
 tools = [
-    {
-        "type": "function",
-        "function": {
-            "name": "open_safe_url",
-            "description": "Open a URL in the browser if it's deemed safe",
-            "parameters": {
-                "type": "object",
-                "properties": {
-                    "url": {
-                        "type": "string",
-                        "description": "The URL to open",
-                    },
-                },
-                "required": ["url", "lan"],
-            },
-        },
-    },
-    {
-        "type": "function",
-        "function": {
-            "name": "get_current_time",
-            "description": "Get the current system time with timezone information",
-            "parameters": {
-                "type": "object",
-                "properties": {},
-                "required": [],
-            },
-        },
-    },
-    {
-        "type": "function",
-        "function": {
-            "name": "analyze_directory",
-            "description": "Analyze the contents of a directory, counting files and folders",
-            "parameters": {
-                "type": "object",
-                "properties": {
-                    "path": {
-                        "type": "string",
-                        "description": "The directory path to analyze. Defaults to current directory if not specified.",
-                    },
-                },
-                "required": [],
-            },
-        },
-    },
-    {
+
+    { # fetch wikipedia content
         "type": "function",
         "function": {
             "name": "fetch_wikipedia_content",
@@ -74,119 +34,293 @@ tools = [
                     },
                     "lan": {
                         "type": "string",
+                        "description": "Language tags for API. Currently supported: en,es, switch according to the user's language",
+                    },
+                },
+                "required": ['search_query", "lan'],
+            },
+        },
+    },
+    { # fetch google content
+    
+        "type": "function",
+        "function": {
+            "name": "fetch_google_content",
+            "description": (
+            "Search the entire web with google and get top results. "
+            "Use this if the user is asking for something very specific"
+            "Use this when the user asks for more info on a specific topic"
+            "If the user has a typo in their search query, correct it before searching."
+        ),
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "search_query": {
+                        "type": "string",
+                        "description": "Search query for finding the Wikipedia article.",
+                    },
+                    "lan": {
+                        "type": "string",
                         "description": "Language tags for API. Currently supported: en,es",
                     },
                 },
-                "required": ["search_query"],
+                "required": ['search_query", "lan'],
             },
         },
-    }
+    },
+    { # save file
+        "type": "function",
+        "function": {
+            "name": "save_file",
+            "description": (
+                "Creates a file locally with the especified name, extension, and content"
+                "Useful for saving programs, summaries, research, or whatever is requested"
+                "Call only after the content requested has been created"
+                ),
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "filename": {
+                        "type": "string",
+                        "description": "Name of the file to be created without extention, "
+                        "if not provided, choose it",
+                    },
+                    "content": {
+                        "type": "string",
+                        "description": "Content to be saved inside the file.",
+                    },
+                    "extention": {
+                        "type": "string",
+                        "description": "the file extention, [dot].txt for plain text, [dot].py for python, [dot].js for javascript, etc."
+                        "if isn´t specified, choose the most optimal for the case",
+                    },
+                },
+                "required": ['filename","content", "extention'],
+            },
+        },
+    },
+    { # fetch URL content
+        
+            "type": "function",
+            "function": {
+                "name": "open_url",
+                "description": (
+                "Opens given URL and returns the content of the site."
+                "use it with the most relevant URL given by fetch_google_content or with a given URL."
+                "Dont hesitate to use it with a given url"
+            ),
+                "parameters": {
+                    "type": "object",
+                    "properties": {
+                        "url": {
+                            "type": "string",
+                            "description": "URL of the website to open",
+                        },
+                    },
+                    "required": ['url", "lan'],
+                },
+            },
+        },
+    { # Solve 
+    
+        "type": "function",
+        "function": {
+            "name": "solve_ecuation",
+            "description": (
+                "Takes a latex operation and solves it."
+                "Can solve differentiation, integration, simplification, etc."
+                "The LaTeX formula MUST include the operation to be done."
+                "This tool doesn't make mistakes"
+        ),
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "ecuation": {
+                        "type": "string",
+                        "description": "Ecuation or formula to solve, must be in LaTeX shape",
+                    },
+                },
+                "required": ['ecuation']
+            },
+        },
+    } 
+    
 ]
 
 
-def chat():
-    messages = [
+
+messages = [
         {
             "role": "system",
-            "content": "You are a helpful assistant that can open safe web links, "
-            "tell the current time, and analyze directory contents. "
-            "Hablas Español e Ingles "
-            "You can use multiple tools at once. Use these capabilities whenever they might be helpful."
-            f"the current date is {datetime.now().strftime("%Y-%m-%d %H:%M:%S %Z")}",
+            "content": 
+            "You are a helpful assistant who can search content on google and wikipedia, "
+            "you can also save files with specific extensions. "
+            "You can use multiple tools at once."
+            "Use these capabilities whenever posible to provide the best and most reliable results."
+           # "Hablas Español e Ingles "
+            f"the current date is {datetime.now().strftime('%Y-%m-%d %H:%M:%S %Z')}",
         }
     ]
 
-    print(
-        "Assistant: Hello! I can help you open safe web links, tell you the current time, and analyze directory contents. What would you like me to do?"
-    )
-    print("(Type 'quit' to exit)")
-
-    while True:
-        # Get user input
-        user_input = input("\nYou: ").strip()
-
-        # Check for quit command
-        if user_input.lower() == "quit":
-            print("Assistant: Goodbye!")
-            break
-        elif user_input.lower() == "clear":
-            print("Conversation Reset...")
-            print("-"*shutil.get_terminal_size().columns)
-            print(
-            "Assistant: Hello! I can help you open safe web links, "
-            "tell you the current time, and analyze directory contents. "
-            "What would you like me to do?"
-            )
-            messages = [
-            {
-                "role": "system",
-                "content": "You are a helpful assistant that can open safe web links, tell the current time, and analyze directory contents. You can use multiple tools at once. don't hesitate about these capabilities whenever they might be helpful.",
-            }
-            ]   
-            continue
-        elif(user_input.lower() == "msg"):
-            print(messages)
-            continue
+latex_delimiters_set = [
+        {"left": "$$", "right": "$$", "display": True},
+        {"left": "\\(", "right": "\\)", "display": False},
+        { "left": '\\[', "right": '\\]', "display": True},
+        #{"left": "$", "right": "$", "display": False},
+    ]
 
 
-        # Add user message to conversation
-        messages.append({"role": "user", "content": user_input})
+def chat(user_input, history):
+    global messages  # Ensure we persist conversation history
+    
+    if user_input.lower() == "msg":
+        yield "Printing..."
+        print(messages)  # Show the entire conversation history
+        return
+    if user_input.lower() == "clr":
+        yield "resetting"
+        messages = [
+        {
+            "role": "system",
+            "content": 
+            ("You are a helpful assistant that can search content on google (fetch_google_content) and wikipedia (fetch_wikipedia_content),"
+            "You can fetch URL's to get relevant information from within websites (open_url)"
+            "You save files with specific extensions. (save_file)"
+            "You can solve math problems. (solve_ecuation)"
+            "You can use multiple tools at once."
+            "Do not hesitate to use these capabilities as much as posible to provide the best posible results."
+            "After using a tool to generate a solution, prioritize presenting that result directly. "
+            "If the result is a mathematical answer or a factual statement, "
+            "avoid unnecessary explanation or re-solving unless the user specifically asks for further steps or clarification."
+           # "Hablas Español e Ingles "
+           f"the current date is { datetime.now().strftime('%Y-%m-%d%H:%M:%S %Z') }"
+          )
+        }
+    ]
+        return
+    
+    # Append user message to conversation history
+    messages.append({"role": "user", "content": user_input})
+    
+    try:
+        # Get initial response from model
+        stream = client.chat.completions.create(
+            model=model,
+            messages=messages,  # Use the updated messages list
+            tools=tools,
+            stream=True
+        )
+        
+        final_tool_calls = {}
+        assistant_msgs = ""
 
-        try:
-            # Get initial response
+        for chunk in stream:
+            if chunk.choices[0].delta.tool_calls:
+                for tool_call in chunk.choices[0].delta.tool_calls or []:
+                    index = tool_call.index
+                    if index not in final_tool_calls:
+                        final_tool_calls[index] = tool_call
+                    else:
+                        final_tool_calls[index].function.arguments += tool_call.function.arguments
+            else:
+                if chunk.choices[0].delta.content is not None:
+                    
+                    assistant_msgs += chunk.choices[0].delta.content
+                    yield assistant_msgs
+        
+        
+
+        tool_meta = ""          
+        # If tool calls are present, process them and continue the conversation
+        if final_tool_calls:
+            result = process_tool_calls(final_tool_calls, messages)
+            
+            for y in result:
+                print(y, " --- ", type(y))  
+
+                if type(y) is str:
+                    print(y, "AJAAA ")
+                    assistant_msgs += str(y) + "\n"
+                    tool_meta = y
+                    yield assistant_msgs
+                elif y is dict:
+                    messages.append(y)
+
             stream = client.chat.completions.create(
                 model=model,
                 messages=messages,
-                tools=tools,
-                stream = True
+                stream=True
             )
-            
-            
-            final_tool_calls = {}
-
-            assistant_msgs = ""
-
             for chunk in stream:
-                if chunk.choices[0].delta.tool_calls:
-                    #print("calling tools .... ")
-                    for tool_call in chunk.choices[0].delta.tool_calls or []:
-                        index = tool_call.index
-
-                        if index not in final_tool_calls:
-                            final_tool_calls[index] = tool_call
-
-                        final_tool_calls[index].function.arguments += tool_call.function.arguments
-                else:
-                    #print("No tools to be called ... ")
-                    if chunk.choices[0].delta.content is not None:
-                        print(chunk.choices[0].delta.content, end="", flush=True)
-                        assistant_msgs +=  chunk.choices[0].delta.content
+                if chunk.choices[0].delta.content is not None:
                     
-            
-                        
+                    assistant_msgs += chunk.choices[0].delta.content
+                    yield assistant_msgs
 
-            if len(final_tool_calls):      
-                #print("tool calling success... ")   
-                messages = process_tool_calls(final_tool_calls, messages)
-                stream = client.chat.completions.create(
-                model=model,
-                messages=messages,
-                stream = True
-                )
-                for chunk in stream:
-                    if chunk.choices[0].delta.content is not None:
-                        print(chunk.choices[0].delta.content, end="", flush=True)
-                        assistant_msgs +=  chunk.choices[0].delta.content
+        # Save final assistant response
+        messages.append({"role": "assistant", "content": assistant_msgs, "metadata": {'title': tool_meta}})
 
-        
+    except Exception as e:
+        print(f"Error: {e}")
 
-            # Add user message to conversation
-            messages.append({"role": "assistant", "content": assistant_msgs})
-             
-            
 
-        except Exception as e:
-            print(e)
+
+def clear_chat():
+    global messages
+    messages = [
+        {
+            "role": "system",
+            "content": 
+            "You are a helpful assistant who can search content on google and wikipedia, "
+            "you can also save files with specific extensions. "
+            "You can use multiple tools at once."
+            "Use these capabilities whenever posible to provide the best and most reliable results."
+           # "Hablas Español e Ingles "
+            f"the current date is {datetime.now().strftime('%Y-%m-%d %H:%M:%S %Z')}",
+        }
+    ]
+
+    return messages
+
+def add_user_message(user_message, history):
+    if user_message.strip() == "":
+        return "", history
+    # Append the user message to the chat history
+    history.append({"role": "user", "content": user_message})
+    return "", history
+
+def stream_response(history):
+    # Extract the last user message
+    user_message = history[-1]['content']
+    
+    # The assistant's response will be streamed from your chat() function.
+    # Initially, we add an empty assistant message to the history.
+    history.append({"role": "assistant", "content": ""})
+    
+    # Stream the response and update the assistant message in history.
+    # Yield the full conversation after each update.
+    for new_chunk in chat(user_message, history):
+        # Update the last assistant message with the new streaming chunk.
+        history[-1]['content'] = new_chunk
+        yield history
+
+with gr.Blocks(css = ".message-row.bubble.bot-row.svelte-yaaj3 { max-width: 70% !important}") as demo:
+    chatbot = gr.Chatbot(
+        type="messages", 
+        latex_delimiters = latex_delimiters_set,
+        show_copy_button = True,
+        editable = "all",
+        scale = 0
+        )
+    msg = gr.Textbox(placeholder="Enter your message here")
+    clear = gr.Button("Clear")
+    
+    # When the user submits a message, first update the conversation history.
+    msg.submit(add_user_message, inputs=[msg, chatbot], outputs=[msg, chatbot], queue=False)\
+       .then(stream_response, chatbot, chatbot, queue=True)
+    
+    # Clear button resets the chatbot history.
+    clear.click(clear_chat      , None, chatbot, queue=False)
 
 if __name__ == "__main__":
-    chat()
+    demo.launch()

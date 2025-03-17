@@ -1,0 +1,10 @@
+output,timestamp
+"'
+    <script src=""https://polyfill.io/v3/polyfill.min.js?features=es6""></script>
+    <script id=""MathJax-script"" async 
+            src=""https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"">
+    </script>
+    
+    The area of a parallelogram is given by:
+    <p>$$ \text{Area} = \left| \vec{AB} \times \vec{AD} \right| $$</p>
+    ",2025-03-13 22:41:01.047196

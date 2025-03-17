@@ -116,7 +116,7 @@ def fetch_wikipedia_content(search_query: str) -> dict:
             search_data = json.loads(response.read().decode())
         
 
-        pages = search_data["query"]["pages"]
+        pages = search_data['query']['pages']
 
         if not len(pages):
             return {
@@ -127,8 +127,8 @@ def fetch_wikipedia_content(search_query: str) -> dict:
         keys = pages.keys()
         content = ""
         for key in keys:
-            content += pages[key]["title"] + "\n"
-            content += pages[key]["extract"] + "\n"
+            content += pages[key]['title'] + "\n"
+            content += pages[key]['extract'] + "\n"
 
         print(content)
         return {
@@ -156,17 +156,17 @@ def analyze_directory(path: str = ".") -> dict:
 
         for entry in os.scandir(path):
             if entry.is_file():
-                stats["total_files"] += 1
+                stats['total_files'] += 1
                 ext = os.path.splitext(entry.name)[1].lower() or "no_extension"
-                stats["file_types"][ext] = stats["file_types"].get(ext, 0) + 1
-                stats["total_size_bytes"] += entry.stat().st_size
+                stats['file_types'][ext] = stats['file_types'].get(ext, 0) + 1
+                stats['total_size_bytes'] += entry.stat().st_size
             elif entry.is_dir():
-                stats["total_dirs"] += 1
+                stats['total_dirs'] += 1
                 # Add size of directory contents
                 for root, _, files in os.walk(entry.path):
                     for file in files:
                         try:
-                            stats["total_size_bytes"] += os.path.getsize(os.path.join(root, file))
+                            stats['total_size_bytes'] += os.path.getsize(os.path.join(root, file))
                         except (OSError, FileNotFoundError):
                             continue
 
@@ -189,7 +189,7 @@ tools = [
                         "description": "The URL to open",
                     },
                 },
-                "required": ["url"],
+                "required": ['url'],
             },
         },
     },
@@ -239,7 +239,7 @@ tools = [
                         "description": "Search query for finding the Wikipedia article.",
                     },
                 },
-                "required": ["search_query"],
+                "required": ['search_query'],
             },
         },
     }
@@ -279,7 +279,7 @@ def process_tool_calls(response, messages):
 
         # Determine which function to call based on the tool call name
         if tool_call.function.name == "open_safe_url":
-            result = open_safe_url(arguments["url"])
+            result = open_safe_url(arguments['url'])
         elif tool_call.function.name == "get_current_time":
             result = get_current_time()
         elif tool_call.function.name == "analyze_directory":
@@ -287,15 +287,15 @@ def process_tool_calls(response, messages):
             result = analyze_directory(path)
         elif tool_call.function.name == "fetch_wikipedia_content":
 
-            search_query = arguments["search_query"]
+            search_query = arguments['search_query']
             result = fetch_wikipedia_content(search_query)
             terminal_width = shutil.get_terminal_size().columns
             print("\n" + "=" * terminal_width)
 
-            if result["status"] == "success":
+            if result['status'] == "success":
                 print(f"\nWikipedia article: {result['title']}")
                 print("-" * terminal_width)
-                print(result["content"])
+                print(result['content'])
             else:
                 print(
                 f"\nError fetching content: {result['message']}"
