@@ -40,7 +40,7 @@ def process_tool_calls(final_tool_calls, messages):
             result = analyze_directory(path)
 
         elif name == "fetch_wikipedia_content":
-            lan = arguments['lan']
+            lan = arguments['lan'] or "en"
             search_query = arguments['search_query']
             yield f"Looking for {search_query} on wikipedia... "
             
@@ -59,20 +59,20 @@ def process_tool_calls(final_tool_calls, messages):
             result = fetch_google_search_results(search_query)
             
         elif name == "save_file":
-            yield  f"Creating file {arguments['filename']}{arguments['extention']}..."
+            yield  f"Creating file {arguments['filename']}{arguments['extension']}..."
             result = save_to_file(
                 filename = arguments['filename'],
                 content = arguments['content'],
-                extention = arguments['extention']
+                extension = arguments['extension']
                 )
-            yield  f"File {arguments['filename']}{arguments['extention']} saved."
+            yield  f"File {arguments['filename']}{arguments['extension']} saved."
 
         elif name == 'open_url':
             yield f"Going deeper into {arguments['url']}"
             result = extract_content(arguments['url'])           
-        elif name == "solve_ecuation":
-            yield f"Solving: \\({arguments['ecuation']} \\)"
-            result = solve_eq(arguments['ecuation'])
+        elif name == "solve_equation":
+            yield f"Solving: \\({arguments['equation']} \\)"
+            result = solve_eq(arguments['equation'])
            #     yield f"Result: \\({result} \\)"
         else:
             # llm tried to call a function that doesn't exist, skip

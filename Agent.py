@@ -1,19 +1,21 @@
 from datetime import datetime
 from openai import OpenAI # type: ignore
-import shutil
 from wikibot.utils import process_tool_calls
 import gradio as gr # type: ignore
-    
-# Point to the local server
+from wikibot.whisper import transcribe
+from dotenv import dotenv_values # type: ignore
+config = dotenv_values(".env")
 
-client = OpenAI(base_url= "http://192.168.5.108:1234/v1", api_key="lm-studio")
-#client = OpenAI(base_url="http://192.168.5.108:1234/v1", api_key="lm-studio")
+# Point to the local server
+client = OpenAI(api_key = config.get("OPENAI_API_KEY"))
+#client = OpenAI(base_url= "http://192.168.5.108:1234/v1", api_key="lm-studio")
+client = OpenAI(base_url="http://192.168.5.53:1234/v1", api_key="lm-studio")
 
 model = "deepseek-r1-distill-llama-8b"
 model = "gemma-3-12b-it"
 model = "qwen2.5-7b-instruct"
+#model = "gpt-4o-mini"
 tools = [
-
     { # fetch wikipedia content
         "type": "function",
         "function": {
@@ -37,130 +39,133 @@ tools = [
                         "description": "Language tags for API. Currently supported: en,es, switch according to the user's language",
                     },
                 },
-                "required": ['search_query", "lan'],
+                "required": ["search_query", "lan"],
             },
         },
     },
-    { # fetch google content
-    
-        "type": "function",
-        "function": {
-            "name": "fetch_google_content",
-            "description": (
-            "Search the entire web with google and get top results. "
-            "Use this if the user is asking for something very specific"
-            "Use this when the user asks for more info on a specific topic"
-            "If the user has a typo in their search query, correct it before searching."
+    {
+    "type": "function",
+    "function": {
+        "name": "fetch_google_content",
+        "description": (
+            "Search the web using Google to retrieve the top results for a given query. "
+            "This tool is useful when the user needs more information on a specific topic. "
+            "If there is a typo in the query, it will be corrected before performing the search."
         ),
-            "parameters": {
-                "type": "object",
-                "properties": {
-                    "search_query": {
-                        "type": "string",
-                        "description": "Search query for finding the Wikipedia article.",
-                    },
-                    "lan": {
-                        "type": "string",
-                        "description": "Language tags for API. Currently supported: en,es",
-                    },
-                },
-                "required": ['search_query", "lan'],
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "search_query": {
+                    "type": "string",
+                    "description": "The search query to be used for finding relevant web results."
+                }
             },
-        },
+            "required": ["search_query"]
+        }
+    }
     },
-    { # save file
+    {
+    "type": "function",
+    "function": {
+        "name": "save_file",
+        "description": (
+            "Creates a file locally with the specified name, extension, and content. "
+            "This tool is useful for saving programs, summaries, research, or any other content as requested. "
+            "It should be called only after the content to be saved has been generated."
+        ),
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "filename": {
+                    "type": "string",
+                    "description": "The name of the file to be created, without the extension. If not provided, a default name will be chosen."
+                },
+                "content": {
+                    "type": "string",
+                    "description": "The content to be saved inside the file."
+                },
+                "extension": {
+                    "type": "string",
+                    "description": "The file extension (e.g., '.txt' for plain text, '.py' for Python, '.js' for JavaScript). If not specified, an appropriate extension will be chosen based on the content."
+                }
+            },
+            "required": ["filename", "content", "extension"]
+        }
+    }
+},
+    {
         "type": "function",
         "function": {
-            "name": "save_file",
+            "name": "open_url",
             "description": (
-                "Creates a file locally with the especified name, extension, and content"
-                "Useful for saving programs, summaries, research, or whatever is requested"
-                "Call only after the content requested has been created"
-                ),
-            "parameters": {
-                "type": "object",
-                "properties": {
-                    "filename": {
-                        "type": "string",
-                        "description": "Name of the file to be created without extention, "
-                        "if not provided, choose it",
-                    },
-                    "content": {
-                        "type": "string",
-                        "description": "Content to be saved inside the file.",
-                    },
-                    "extention": {
-                        "type": "string",
-                        "description": "the file extention, [dot].txt for plain text, [dot].py for python, [dot].js for javascript, etc."
-                        "if isn´t specified, choose the most optimal for the case",
-                    },
-                },
-                "required": ['filename","content", "extention'],
-            },
-        },
-    },
-    { # fetch URL content
-        
-            "type": "function",
-            "function": {
-                "name": "open_url",
-                "description": (
-                "Opens given URL and returns the content of the site."
-                "use it with the most relevant URL given by fetch_google_content or with a given URL."
-                "Dont hesitate to use it with a given url"
+                "Opens the given URL and returns the content of the website. "
+                "Use this with the most relevant URL provided by 'fetch_google_content' or a directly given URL. "
+                "Feel free to use it with any provided URL to retrieve the content."
             ),
-                "parameters": {
-                    "type": "object",
-                    "properties": {
-                        "url": {
-                            "type": "string",
-                            "description": "URL of the website to open",
-                        },
-                    },
-                    "required": ['url", "lan'],
-                },
-            },
-        },
-    { # Solve 
-    
-        "type": "function",
-        "function": {
-            "name": "solve_ecuation",
-            "description": (
-                "Takes a latex operation and solves it."
-                "Can solve differentiation, integration, simplification, etc."
-                "The LaTeX formula MUST include the operation to be done."
-                "This tool doesn't make mistakes"
-        ),
             "parameters": {
                 "type": "object",
                 "properties": {
-                    "ecuation": {
+                    "url": {
                         "type": "string",
-                        "description": "Ecuation or formula to solve, must be in LaTeX shape",
-                    },
+                        "description": "The URL of the website to open."
+                    }
                 },
-                "required": ['ecuation']
-            },
-        },
-    } 
-    
+                "required": ["url"]
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "solve_equation",
+            "description": (
+                "Solves a LaTeX equation by performing operations like differentiation, integration, simplification, etc. "
+                "The LaTeX formula must clearly specify the operation to be performed. "
+                "This tool is designed to perform these operations accurately."
+            ),
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "equation": {
+                        "type": "string",
+                        "description": "The equation or formula to solve, must be in LaTeX format without latex delimiters"
+                    }
+                },
+                "required": ["equation"]
+            }
+        }
+    }
 ]
 
 
+current_date = datetime.now().strftime('%Y-%m-%d %H:%M:%S %Z')
 
-messages = [
+messages = []
+
+def clear_chat():
+    global messages
+    messages = [
         {
-            "role": "system",
-            "content": 
-            "You are a helpful assistant who can search content on google and wikipedia, "
-            "you can also save files with specific extensions. "
-            "You can use multiple tools at once."
-            "Use these capabilities whenever posible to provide the best and most reliable results."
-           # "Hablas Español e Ingles "
-            f"the current date is {datetime.now().strftime('%Y-%m-%d %H:%M:%S %Z')}",
-        }
+    "role": "system",
+    "content": (
+        "You are a helpful assistant capable of performing the following tasks: "
+        "- Searching content on Google (fetch_google_content)"
+        #" and Wikipedia (fetch_wikipedia_content)."       
+        "- Fetching relevant information from websites using URLs (open_url). "
+        "- Saving files with specific extensions (save_file). "
+        "- Solving math problems (solve_equation). "
+        "You can use multiple tools simultaneously. "
+        "Do not hesitate to use these capabilities as much as possible to provide the best results. "
+        "After using a tool to generate a solution, prioritize presenting the result directly. "
+        "If the result is a mathematical answer or a factual statement, avoid unnecessary explanations or re-solving unless the user specifically asks for further steps or clarification. "
+        "You are bilingual in English and Spanish. "
+        f"The current date and time is: {current_date}"
+        )
+    }
+
     ]
+
+    return messages
 
 latex_delimiters_set = [
         {"left": "$$", "right": "$$", "display": True},
@@ -179,24 +184,7 @@ def chat(user_input, history):
         return
     if user_input.lower() == "clr":
         yield "resetting"
-        messages = [
-        {
-            "role": "system",
-            "content": 
-            ("You are a helpful assistant that can search content on google (fetch_google_content) and wikipedia (fetch_wikipedia_content),"
-            "You can fetch URL's to get relevant information from within websites (open_url)"
-            "You save files with specific extensions. (save_file)"
-            "You can solve math problems. (solve_ecuation)"
-            "You can use multiple tools at once."
-            "Do not hesitate to use these capabilities as much as posible to provide the best posible results."
-            "After using a tool to generate a solution, prioritize presenting that result directly. "
-            "If the result is a mathematical answer or a factual statement, "
-            "avoid unnecessary explanation or re-solving unless the user specifically asks for further steps or clarification."
-           # "Hablas Español e Ingles "
-           f"the current date is { datetime.now().strftime('%Y-%m-%d%H:%M:%S %Z') }"
-          )
-        }
-    ]
+        clear_chat()
         return
     
     # Append user message to conversation history
@@ -213,7 +201,7 @@ def chat(user_input, history):
         
         final_tool_calls = {}
         assistant_msgs = ""
-
+       
         for chunk in stream:
             if chunk.choices[0].delta.tool_calls:
                 for tool_call in chunk.choices[0].delta.tool_calls or []:
@@ -224,22 +212,35 @@ def chat(user_input, history):
                         final_tool_calls[index].function.arguments += tool_call.function.arguments
             else:
                 if chunk.choices[0].delta.content is not None:
-                    
                     assistant_msgs += chunk.choices[0].delta.content
                     yield assistant_msgs
-        
-        
 
+                
         tool_meta = ""          
         # If tool calls are present, process them and continue the conversation
+       
         if final_tool_calls:
+            
+            assistant_tool_call_message = {
+                "role": "assistant",
+                "tool_calls": [
+                    {
+                        "id": final_tool_calls[key].id,
+                        "type": final_tool_calls[key].type,
+                        "function": {
+                            "arguments": final_tool_calls[key].function.arguments,
+                            "name": final_tool_calls[key].function.name,
+                        },
+                    }
+                    for key in final_tool_calls.keys()
+                ],
+            }
+            messages.append(assistant_tool_call_message)
+                    
             result = process_tool_calls(final_tool_calls, messages)
             
             for y in result:
-                print(y, " --- ", type(y))  
-
                 if type(y) is str:
-                    print(y, "AJAAA ")
                     assistant_msgs += str(y) + "\n"
                     tool_meta = y
                     yield assistant_msgs
@@ -264,24 +265,6 @@ def chat(user_input, history):
         print(f"Error: {e}")
 
 
-
-def clear_chat():
-    global messages
-    messages = [
-        {
-            "role": "system",
-            "content": 
-            "You are a helpful assistant who can search content on google and wikipedia, "
-            "you can also save files with specific extensions. "
-            "You can use multiple tools at once."
-            "Use these capabilities whenever posible to provide the best and most reliable results."
-           # "Hablas Español e Ingles "
-            f"the current date is {datetime.now().strftime('%Y-%m-%d %H:%M:%S %Z')}",
-        }
-    ]
-
-    return messages
-
 def add_user_message(user_message, history):
     if user_message.strip() == "":
         return "", history
@@ -304,7 +287,23 @@ def stream_response(history):
         history[-1]['content'] = new_chunk
         yield history
 
-with gr.Blocks(css = ".message-row.bubble.bot-row.svelte-yaaj3 { max-width: 70% !important}") as demo:
+def process_audio(audio, history):
+    speech_text = transcribe(audio)
+
+    if speech_text.strip() == "":
+        return "", history
+    # Append the user message to the chat history
+    history.append({"role": "user", "content": speech_text})
+    return "", history
+    
+css = """
+.message-row.bubble.bot-row.svelte-yaaj3 { max-width: 70% !important}
+#submit {background-color: #04AA6D}
+.col     {width: 20% !important}
+"""
+
+
+with gr.Blocks(css = css) as demo:
     chatbot = gr.Chatbot(
         type="messages", 
         latex_delimiters = latex_delimiters_set,
@@ -312,15 +311,24 @@ with gr.Blocks(css = ".message-row.bubble.bot-row.svelte-yaaj3 { max-width: 70% 
         editable = "all",
         scale = 0
         )
-    msg = gr.Textbox(placeholder="Enter your message here")
-    clear = gr.Button("Clear")
+    with gr.Row():
+        audio = gr.Audio(sources=["microphone"], type="filepath")
+        msg = gr.Textbox(placeholder="Enter your message here")
+        with gr.Column(elem_classes="col"):
+            submit = gr.Button("Submit",elem_classes="btn", elem_id="submit")
+            clear = gr.Button("Clear", elem_classes="btn")
+
+    
+
+    audio.stop_recording(process_audio, inputs=[audio, chatbot], outputs=[msg, chatbot])\
+        .then(stream_response, chatbot, chatbot, queue=True)
     
     # When the user submits a message, first update the conversation history.
-    msg.submit(add_user_message, inputs=[msg, chatbot], outputs=[msg, chatbot], queue=False)\
+    submit.click(add_user_message, inputs=[msg, chatbot], outputs=[msg, chatbot], queue=False)\
        .then(stream_response, chatbot, chatbot, queue=True)
     
     # Clear button resets the chatbot history.
-    clear.click(clear_chat      , None, chatbot, queue=False)
+    clear.click(clear_chat   , None, chatbot, queue=False)
 
 if __name__ == "__main__":
     demo.launch()

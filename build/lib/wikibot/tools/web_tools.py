@@ -4,12 +4,22 @@ import urllib.parse
 import requests # type: ignore
 from bs4 import BeautifulSoup # type: ignore
 import re
+import os
+
+from dotenv import dotenv_values # type: ignore
+config = dotenv_values(".env")
+
+if(config):
+    print(".env file succesfully loaded")
+else:
+    print("ERROR LOADING .env FILE")
+
 
 def extract_content(
         url,
         unwanted_classes:list = ["social", "share", "follow", "ads", "popup", "widget", "related", "sidebar", "menu"],
-        unwanted_tags:list = ["header", "footer", "nav", "aside", "script", "style", "button", "svg"],
-        wanted_tags:list = ["h1", "h2", "h3","p", "li", "span", "pre"],
+        unwanted_tags:list =    ["header", "footer", "nav", "aside", "script", "style", "button", "svg"],
+        wanted_tags:list =      ["h1", "h2", "h3","p", "li", "span", "pre"],
         headers:object = {
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"    
             }   
@@ -37,13 +47,16 @@ def extract_content(
         for p in soup.find_all(wanted_tags):
             content = p.get_text()
             if(p.name == "h1"):
-                content = f"tittle: {p.get_text()} \n"
+                content = f"tittle: {p.get_text()}."
             elif (p.name == "h2"):
-                content = f"sub-tittle: {p.get_text()} \n"
+                content = f"sub-tittle: {p.get_text()}."
             elif (p.name == "h3"):
-                content = f"subsection-tittle: {p.get_text()}\n"
+                content = f"subsection-tittle: {p.get_text()}."
             elif (p.name == "li"):
-                content = f"-{p.get_text()} \n"
+                content = f"-{p.get_text()}."
+            elif (p.name == "p"):
+                content = f" {p.get_text()}. "
+            content.replace("\n","").replace("\t", "")
             paragraphs.append(content)
         return "".join(paragraphs)  # Return first 5 paragraphs as relevant content
     
@@ -115,7 +128,11 @@ def fetch_wikipedia_content(search_query: str, lan: str = "en") -> dict:
         print("error fetching wiki", e)
         return {"status": "error", "message": str(e)}
     
-def fetch_google_search_results(search_query: str, api_key: str, cx: str) -> dict:
+def fetch_google_search_results(
+        search_query: str, 
+        api_key: str = config.get('GOOGLE_API_KEY'), 
+        cx: str = config.get('GOOGLE_CX')
+        ) -> dict:
     """
     Fetches search results from Google Custom Search API for a given search_query.
     

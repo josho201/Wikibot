@@ -7,6 +7,7 @@ src/Wikibot.egg-info/dependency_links.txt
 src/Wikibot.egg-info/top_level.txt
 src/wikibot/__init__.py
 src/wikibot/utils.py
+src/wikibot/whisper.py
 src/wikibot/tools/__init__.py
 src/wikibot/tools/local_tools.py
 src/wikibot/tools/web_tools.py

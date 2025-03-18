@@ -18,11 +18,11 @@ def solve_eq(latex: str):
         eq = simplify(eq)
         if type(eq) is list:
             return {
-                "SOLVED_ECUATION": [e.doit() for e in eq]
+                "SOLVED_equation": [e.doit() for e in eq]
             }
         else:
             return {
-                "SOLVED_ECUATION": str(eq.doit())
+                "SOLVED_equation": str(eq.doit())
             }
     except Exception as e:
         return {"error": str(e)}
@@ -124,13 +124,13 @@ def analyze_directory(path: str = ".") -> dict:
     except Exception as e:
         return {"status": "error", "message": str(e)}
 
-def save_to_file(filename:str , content: str, extention: str = "txt", location: str = "./"):
+def save_to_file(filename:str , content: str, extension: str = "txt", location: str = "./"):
 
-    with open(f"{location}{filename}{extention}", "w") as file:
+    with open(f"{location}{filename}{extension}", "w") as file:
         file.write(content)
         print("File Created succesfully")
 
     return {
                 "status": "success",
-                "message": f"{location}{filename}{extention} created succesfully",
+                "message": f"{location}{filename}{extension} created succesfully",
             }
