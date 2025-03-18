@@ -9,12 +9,12 @@ config = dotenv_values(".env")
 # Point to the local server
 client = OpenAI(api_key = config.get("OPENAI_API_KEY"))
 #client = OpenAI(base_url= "http://192.168.5.108:1234/v1", api_key="lm-studio")
-client = OpenAI(base_url="http://192.168.5.53:1234/v1", api_key="lm-studio")
+#client = OpenAI(base_url="http://192.168.5.53:1234/v1", api_key="lm-studio")
 
 model = "deepseek-r1-distill-llama-8b"
 model = "gemma-3-12b-it"
 model = "qwen2.5-7b-instruct"
-#model = "gpt-4o-mini"
+model = "gpt-4o-mini"
 tools = [
     { # fetch wikipedia content
         "type": "function",

@@ -22,7 +22,7 @@ quant_config= BitsAndBytesConfig(
 # load model and processor
 start = time.perf_counter()
 print("loading whisper ...")
-whisper_path = "C:\\Users\\PC_LUNA\\Documents\\wikibot\\whisper-small"
+whisper_path = "./whisper-small"
 processor = WhisperProcessor.from_pretrained(whisper_path)
 
 
