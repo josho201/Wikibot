@@ -5,17 +5,14 @@ from transformers import BitsAndBytesConfig
 import torch # type: ignore
 import time
 
-from torchaudio import load as load_audio
-
-
-
-
-import torchaudio
+from torch import float16, compile, inference_mode  # type: ignore
+from torchaudio import load as load_audio # type: ignore
+from torchaudio.transforms import Resample # type: ignore
 
 
 quant_config= BitsAndBytesConfig(
     load_in_8bit=True,  # Use 8-bit quantization
-    bnb_8bit_compute_dtype=torch.float16,
+    bnb_8bit_compute_dtype= float16,
     bnb_8bit_use_double_quant=True
 )
 
@@ -36,7 +33,7 @@ model = WhisperForConditionalGeneration.from_pretrained(
 
 print("Whisper succesfully loaded")
 
-model = torch.compile(model)
+model = compile(model)
 model.config.forced_decoder_ids = None
 end = time.perf_counter()
 print(f"Time taken: {end - start:.6f} seconds")
@@ -53,7 +50,7 @@ def transcribe(audio):
     waveform, sample_rate = load_audio(audio)
 
     print("resampling audio")
-    resampler = torchaudio.transforms.Resample(orig_freq=sample_rate, new_freq=16000)
+    resampler = Resample(orig_freq=sample_rate, new_freq=16000)
     waveform = resampler(waveform)
     
     # Move input features to GPU and convert to float16 for efficiency
@@ -69,7 +66,7 @@ def transcribe(audio):
     
     print("generating transcription")
 
-    with torch.inference_mode():
+    with inference_mode():
         predicted_ids = model.generate(input_features)
 
     print("decoding transcription")    
