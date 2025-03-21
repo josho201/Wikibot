@@ -46,15 +46,15 @@ audio_path = "audio/test.mp3"
 def transcribe(audio):
     start = time.perf_counter()
     # Load audio and preprocess
-    print("loading audio")
+   ## print("loading audio")
     waveform, sample_rate = load_audio(audio)
 
-    print("resampling audio")
+    ##print("resampling audio")
     resampler = Resample(orig_freq=sample_rate, new_freq=16000)
     waveform = resampler(waveform)
     
     # Move input features to GPU and convert to float16 for efficiency
-    print("processing audio")
+    ##print("processing audio")
     input_features = processor(
         waveform.squeeze().numpy(), 
         sampling_rate=16000, 
@@ -64,16 +64,16 @@ def transcribe(audio):
 
     # Generate transcription
     
-    print("generating transcription")
+    ##print("generating transcription")
 
     with inference_mode():
         predicted_ids = model.generate(input_features)
 
-    print("decoding transcription")    
+    #print("decoding transcription")    
     transcription = processor.batch_decode(predicted_ids, skip_special_tokens=True)
     end = time.perf_counter()
-    print(f"Time taken: {end - start:.6f} seconds")
-    print("optimizing resources and exporting transcription")
+    #print(f"Time taken: {end - start:.6f} seconds")
+    #print("optimizing resources and exporting transcription")
     del waveform, resampler, input_features,predicted_ids
     torch.cuda.empty_cache()
     return transcription[0]

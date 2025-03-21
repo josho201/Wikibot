@@ -1,0 +1,1131 @@
+## C A P Í T U L O
+
+<!-- image -->
+
+## VECTORES EN R n
+
+## 4.1 VECTORES EN EL PLANO
+
+## SISTEMAS DE COORDENADAS
+
+En muchas aplicaciones tratamos con cantidades mensurables, tales como la presión, la masa y la rapidez, que pueden describirse por completo mediante su magnitud. Por otro lado, existen otras cantidades mensurables, como la velocidad, la fuerza y la aceleración, para cuya descripción es necesario plantear no sólo una magnitud, sino también una dirección. Estas últimas cantidades se denominan vectores , y serán nuestro tema de estudio en este capítulo. Los vectores se denotarán con letras minúsculas en negritas, como u v w y , , , y z . Los números reales se denominarán escalares , y se denotarán con letras minúsculas en cursivas.
+
+Recuerde que el sistema de los números reales puede visualizarse como una línea recta, L , que por lo regular se coloca en posición horizontal. Se elige un punto O en L , llamado origen ; éste corresponde al número 0. Se elige un punto A a la derecha de O , con el cual se fija la longitud OA como 1, y se especifica una dirección positiva. De esta manera, los números reales positivos se encontrarán a la derecha de O , y los negativos a la izquierda de O (vea la figura 4.1).
+
+El valor absoluto | x | del número real x se define como
+
+<!-- image -->
+
+$$| x | = \begin{cases} x \ \text{si} \, x \geq 0 \\ - x \ \text{si} \, x < 0. \end{cases}$$
+
+Por lo tanto,  3 | | = 3, |- | = 2 2,  0 | | = 0, y |-1.82 | = 1.82. -2 3 = 2 3
+
+El número real x que corresponde al punto P se denomina coordenada de P , y el punto P cuya coordenada es x se denota mediante P x ( ).  La  recta L se denomina eje coordenado . Si P está a la derecha de O , su coordenada es la longitud del segmento OP . Si Q se encuentra a la izquierda de O , su coordenada es el negativo de la longitud del segmento OQ . La distancia entre los puntos P y Q con coordenadas a y b , respectivamente, es | b -a | .
+
+<!-- image -->
+
+4## EJEMPLO 1
+
+Figura 4.2 ▲
+
+<!-- image -->
+
+En la figura 4.1 vemos que las coordenadas de los puntos B C D , , y E son, respectivamente, 3, -3, 1.5 y -4.5. La distancia entre B y C es |-3 - 3 | = 6. La distancia entre A y B es  3 - 1 | | = 2. La distancia entre C y E es |-4.5 - ( -3) | = 1.5. ■
+
+Analicemos ahora la situación análoga en el caso del plano. Trazamos un par de rectas perpendiculares que se intersequen en un punto O , denominado origen . Una de las rectas, el eje x , por lo general se toma en posición horizontal; la otra recta, el eje y , se considera entonces en posición vertical. Ahora elegimos un punto en el eje x a la derecha de O , y un punto en el eje y arriba de O para fijar las unidades de longitud y las direcciones positivas en los ejes x y y . Con frecuencia, pero no siempre, estos puntos se eligen de modo que sean equidistantes de O , esto es, se utiliza la misma unidad de longitud en ambos ejes. En conjunto, los ejes x y y se denominan ejes coordenados (figura 4.2). La proyección ortogonal de un punto P en el plano a la recta L es el punto Q que se obtiene al intersecar L con la recta L ′ que pasa por P y es perpendicular a L [figuras 4.3(a) y (b)].
+
+Figura 4.4 ▲
+
+<!-- image -->
+
+Figura 4.3 ▶
+
+<!-- image -->
+
+<!-- image -->
+
+Sean P un punto en el plano y Q su proyección sobre el eje x . La coordenada de Q en el eje x se denomina coordenada x ( abscisa ) de P . De manera análoga, sea Q ′ la proyección de P en el eje y . La coordenada de Q ′ en el eje y se llama coordenada y ( ordenada ) de P . Así, con cada punto en el plano está asociado a un par ordenado ( x , y ) de números reales, que determina sus coordenadas. El punto P , con coordenadas x y y , se denota mediante P x ( , y ). De manera recíproca, es fácil ver (ejercicio T.1) cómo podemos asociar un punto en el plano con cada par ordenado ( x , y ) de números reales (figura 4.4). La correspondencia anterior entre puntos en el plano y pares ordenados de números reales se denomina sistema de coordenadas rectangulares ,  o sistema de coordenadas cartesianas (nombre en honor del filósofo y matemático René Descartes * ). El conjunto de puntos en el plano se denota mediante R 2 , y también suele denominársele 2-espacio .
+
+En 1619, Descartes tuvo un sueño que le permitió considerar que el método de las matemáticas es la mejor vía para llegar a la verdad. Sin embargo, su única publicación relativa a esta disciplina fue La Géométrie ( La geometría ), que apareció como un apéndice de su principal obra filosófica Discours de la méthode pour bien conduire sa raison, et chercher la vérité dans les sciences  Discurso del método para guiar bien la ra-( zón y buscar la verdad en las ciencias ). En La Géométrie , propuso un concepto radicalmente nuevo: la interpretación geométrica desde el punto de vista algebraico. Para expresar una curva en forma algebraica, uno elige cualquier recta de referencia que resulte conveniente, y selecciona un punto de referencia sobre dicha recta. Si y representa la distancia entre cualquier punto de la recta y el punto de referencia, y x representa la distancia a lo largo de la recta hasta el punto de referencia, existe una ecuación que relaciona x y y , representando la curva. El uso sistemático de las coordenadas cartesianas fue introducido posteriormente, en el siglo XVII, por autores que continuaron el trabajo de Descartes.## EJEMPLO 2
+
+En la figura 4.5 se muestran varios puntos y sus coordenadas.
+
+## Figura 4.5 ▶
+
+<!-- image -->
+
+Las coordenadas del origen son (0, 0). Las coordenadas de la proyección del punto P x ( , y ) en el eje x son ( x , 0), y las coordenadas de su proyección en el eje y son (0, y ). ■
+
+## VECTORES
+
+Recuerde que en la sección 1.2 definimos un n -vector, y que al inicio de la sección 1.3 presentamos vectores en forma algebraica para mejor comprensión de la multiplicación de matrices. En esta sección veremos los 2-vectores desde el punto de vista geométrico, y en la siguiente haremos lo mismo con los n -vectores.
+
+Considere el 2-vector
+
+$$u = \begin{bmatrix} x _ { 1 } \\ y _ { 1 } \end{bmatrix},$$
+
+donde x 1 y y 1 son números reales. Con u asociamos el segmento de recta dirigido con punto inicial en el origen O (0, 0) y punto terminal en P x ( 1 , y 1 ). El segmento de recta dirigido de O a P se denota mediante ; O se denomina su cola y P su cabeza . Para distinguir entre ambas, colocamos una punta de flecha sobre la cabeza (figura 4.6). - → OP
+
+Figura 4.6 ▶
+
+<!-- image -->
+
+Un segmento de recta dirigido tiene una dirección , que es el ángulo que se forma entre ella y la parte positiva del eje x , indicado por la flecha en su cabeza. La magnitud de un segmento de recta dirigido es su longitud.
+
+## EJEMPLO 3
+
+Sea
+
+$$\mathbf u = \begin{bmatrix} 2 \\ 3 \end{bmatrix}.$$## EJEMPLO 4
+
+## DEFINICIÓN
+
+## EJEMPLO 5
+
+Con u podemos asociar el segmento de recta dirigido con cola O (0, 0) y cabeza P (2, 3), tal como se muestra en la figura 4.7. ■
+
+Figura 4.7 ▶
+
+<!-- image -->
+
+De manera recíproca, con un segmento de recta dirigido, , con cola O (0, 0) y cabeza P x ( 1 , y 1 ), podemos asociar el 2-vector - → OP
+
+$$\begin{smallmatrix} \mu _ { x _ { 1 } } \\ y _ { 1 } \end{smallmatrix}.$$
+
+Con el segmento de recta dirigido con cabeza P (4, 5), podemos asociar el 2-vector - → OP
+
+$$\begin{bmatrix} 4 \\ 5 \end{bmatrix}.$$
+
+Un vector en el plano es un 2-vector
+
+$$u = \begin{bmatrix} x _ { 1 } \\ y _ { 1 } \end{bmatrix},$$
+
+donde x 1 y y 1 son números reales, denominados componentes de u . Nos referiremos a un vector en el plano simplemente como vector .
+
+Con base en lo anterior, vemos que con cada vector podemos asociar un segmento de recta dirigido y, recíprocamente, con cada segmento de recta dirigido que parte del origen podemos asociar un vector. Como hemos visto, se necesita un sistema de coordenadas para establecer esta correspondencia. La magnitud y dirección de un vector son la magnitud y la dirección de su segmento de recta dirigido. Los conceptos segmento de recta dirigido y vector suelen utilizarse indistintamente, de manera que un segmento de recta dirigido se denomina vector .
+
+Como un vector es una matriz, se dice que los vectores
+
+$$\mathbf u = \begin{bmatrix} x _ { 1 } \\ y _ { 1 } \end{bmatrix} \ \ y \quad \mathbf v = \begin{bmatrix} x _ { 2 } \\ y _ { 2 } \end{bmatrix}$$
+
+son iguales si x 1 = x 2 y y 1 = y 2 . Esto es, dos vectores son iguales si sus componentes respectivas son iguales.
+
+Los vectores
+
+<!-- image -->
+
+no son iguales, ya que sus componentes respectivas difieren.
+
+■Con cada vector
+
+$$\mathbf u = \begin{bmatrix} x _ { 1 } \\ y _ { 1 } \end{bmatrix}$$
+
+también podemos asociar de manera única el punto P x ( 1 , y 1 ); de forma recíproca, con cada punto P x ( 1 , y 1 ) podemos asociar de manera única el vector
+
+$$\begin{bmatrix} x _ { 1 } \\ y _ { 1 } \end{bmatrix}.$$
+
+En consecuencia, también podemos escribir u como
+
+$$\mathfrak { u } = ( x _ { 1 }, y _ { 1 } ). \quad \. \quad \.$$
+
+Por supuesto, esta asociación se obtiene por medio del segmento de recta dirigido , donde O es el origen (figura 4.6). - → OP
+
+Por lo tanto, el plano puede visualizarse como el conjunto de todos los puntos, o como el conjunto de todos los vectores. Por esta razón, dependiendo del contexto, en ocasiones tomamos R 2 como el conjunto de pares ordenados ( x 1 , y 1 ), y en otras como el conjunto de todos los 2-vectores
+
+<!-- image -->
+
+En aplicaciones físicas frecuentemente es necesario tratar con un segmento de recta dirigido , del punto P x ( 1 , y 1 ) (no el origen) al punto Q x ( 2 , y 2 ), como se muestra en la figura 4.8(a). Tal segmento de recta dirigido también se llamará vector en el plano , o simplemente vector con cola P x ( 1 , y 1 ) y cabeza Q x ( 2 , y 2 ). Las componentes de tal vector son x 2 -x 1 y y 2 -y 1 . Por lo tanto, en la figura 4.8(a) el vector PQ también puede representarse por medio del vector ( x 2 -x 1 , y 2 -y 1 ) con cola O y cabeza P ″ ( x 2 -x 1 , y 2 -y 1 ). Dos vectores en el plano como ésos se denominarán iguales si sus componentes son iguales. Considere los vectores , que unen los puntos P 1 (2, 3) y Q 1 (5, 5), P 2 (0, 0) y Q 2 (2, 3), P 3 ( -3, 1) y Q 3 ( -1, 4), respectivamente, como se muestra en la figura 4.8(b). Ya que todos ellos tienen las mismas componentes, son iguales. y --→ P Q 3 3 --→ --→ P Q 1 1 , P Q 2 2 - → OP
+
+Para determinar la cabeza Q a b 4 ( , ) del vector
+
+$$\overrightarrow { P _ { 4 } Q _ { 4 } } = \begin{bmatrix} 2 \\ 3 \end{bmatrix} = \overrightarrow { P _ { 2 } Q _ { 2 } },$$
+
+Figura 4.8 ▶
+
+<!-- image -->
+
+(a) Diferentes segmentos de recta dirigidos que representan el mismo vector.
+
+<!-- image -->Figura 4.9 ▲
+
+<!-- image -->
+
+con cola P 4 ( -5, 2), procedemos como sigue. Debemos tener a - ( -5) = 2 y b - 2 = 3, así que a = 2 - 5 = -3 y b = 3 + 2 = 5, de manera que las coordenadas de Q 4 son ( -3, 5). De forma análoga, para determinar la cola P 5 ( c , d ) del vector
+
+$$\overrightarrow { P _ { 5 } Q _ { 5 } } = \begin{bmatrix} 2 \\ 3 \end{bmatrix},$$
+
+con cabeza Q 5 (8, 6), debemos tener 8 c = 2 y 6 d = 3, así que c = 8 - 2 = 6 y d = 6 - 3 = 3. En consecuencia, las coordenadas de P 5 son (6, 3).
+
+## LONGITUD
+
+De acuerdo con el teorema de Pitágoras (figura 4.9), la longitud , magnitud o norma del vector u = ( x 1 , y 1 ) es
+
+$$\| \mathfrak { u } \| & = \sqrt { x _ { 1 } ^ { 2 } + y _ { 1 } ^ { 2 } }.$$
+
+También con base en el teorema de Pitágoras, la longitud del segmento de recta dirigido con punto inicial P 1 ( x 1 , y 1 ) y punto terminal P 2 ( x 2 , y 2 ) es (figura 4.10)
+
+$$\| \overrightarrow { P _ { 1 } P _ { 2 } } \| & = \sqrt { ( x _ { 2 } - x _ { 1 } ) ^ { 2 } + ( y _ { 2 } - y _ { 1 } ) ^ { 2 } }. \\ \therefore \quad \cdot \quad \cdot \quad \cdot \quad \cdot \quad \cdot \quad \cdot \quad \cdot \quad \theta$$
+
+La ecuación (2) proporciona, asimismo, la distancia entre los puntos P 1 y P 2 .
+
+<!-- image -->
+
+## EJEMPLO 6
+
+$$\| \mathfrak { u } \| = \sqrt { ( 2 ) ^ { 2 } + ( - 5 ) ^ { 2 } } = \sqrt { 4 + 2 5 } = \sqrt { 2 9 }.$$
+
+## EJEMPLO 7
+
+Según la ecuación (2), la distancia entre P (3, 2) y Q ( -1, 5), o la longitud del segmento de recta dirigido es - → PQ
+
+$$\left ( \sqrt { P } \right ) \right ) \right ) & = \sqrt { ( - 1 - 3 ) ^ { 2 } + ( 5 - 2 ) ^ { 2 } } = \sqrt { ( - 4 ) ^ { 2 } + 3 ^ { 2 } } = \sqrt { 2 5 } = 5. \quad \right ) \right ) \right ) \right ) \right ) \right ) \right ) \right )$$
+
+La longitud de cada vector (segmento de recta dirigido) en la figura 4.8(b), es (verifique). √ 13 y --→ P Q 3 3 --→ --→ P Q 1 1 , P Q 2 2
+
+Se dice que dos vectores distintos de cero
+
+$$\mathbf u = \begin{bmatrix} x _ { 1 } \\ y _ { 1 } \end{bmatrix} \ \ y \quad \mathbf v = \begin{bmatrix} x _ { 2 } \\ y _ { 2 } \end{bmatrix}$$
+
+son paralelos si uno es un múltiplo del otro. Desde otro punto de vista, son paralelos si las rectas en las que se encuentran son verticales o tienen la misma pendiente. Por lo tanto,  los  vectores  (segmentos de recta dirigidos) en la figura 4.8(b), son paralelos. y --→ P Q 3 3 --→ --→ P Q 1 1 , P Q 2 2<!-- image -->
+
+## USO DE DETERMINANTES PARA CALCULAR ÁREAS
+
+Considere el triángulo con vértices ( x 1 , y 1 ), ( x 2 , y 2 ) y ( x 3 , y 3 ), como se muestra en la figura 4.11.
+
+Se puede calcular el área de este triángulo como el
+
+<!-- image -->
+
+área del trapecio AP P B 1 2 + área del trapecio BP P C 2 3 -área del trapecio AP P C 1 3 .
+
+Ahora recuerde que el área de un trapecio es - de la distancia entre los lados paralelos 1 2 del trapecio, por la suma de las longitudes de los lados paralelos. Por lo tanto,
+
+área del triángulo P P P 1 2 3
+
+$$& = \frac { 1 } { 2 } ( x _ { 2 } - x _ { 1 } ) ( y _ { 1 } + y _ { 2 } ) + \frac { 1 } { 2 } ( x _ { 3 } - x _ { 2 } ) ( y _ { 2 } + y _ { 3 } ) - \frac { 1 } { 2 } ( x _ { 3 } - x _ { 1 } ) ( y _ { 1 } + y _ { 3 } ) \\ & = \frac { 1 } { 2 } x _ { 2 } y _ { 1 } - \frac { 1 } { 2 } x _ { 1 } y _ { 2 } + \frac { 1 } { 2 } x _ { 3 } y _ { 2 } - \frac { 1 } { 2 } x _ { 2 } y _ { 3 } - \frac { 1 } { 2 } x _ { 3 } y _ { 1 } + \frac { 1 } { 2 } x _ { 1 } y _ { 3 }. \\ \text{Accultor audio a acto a v r a c i } \theta \, \text{ac}$$
+
+Resulta que esta expresión es
+
+$$\text{$n$ es} \\ \frac { 1 } { 2 } \det \left ( \begin{bmatrix} x _ { 1 } & y _ { 1 } & 1 \\ x _ { 2 } & y _ { 2 } & 1 \\ x _ { 3 } & y _ { 3 } & 1 \end{bmatrix} \right ).$$
+
+Cuando los puntos están en los otros cuadrantes o se etiquetan en orden diferente, la fórmula que se acaba de obtener dará el negativo del área del triángulo. Así, para un triángulo con vértices ( x 1 , y 1 ), ( x 2 , y 2 ) y ( x 3 , y 3 ), tenemos
+
+$$\text{$row,$ row,\vee1$, $1$, $1$}, $2$, $2$}, \text{$row,$ row,$ row} \\ \text{$area del triángulo} = \frac { 1 } { 2 } \left | \det \left ( \begin{bmatrix} x _ { 1 } & y _ { 1 } & 1 \\ x _ { 2 } & y _ { 2 } & 1 \\ x _ { 3 } & y _ { 3 } & 1 \end{bmatrix} \right ) \right | \\ \text{$rea es} \frac { 1 } { 2 } \text{ del valor absoluto del determinante}.$$
+
+(el área es - del valor absoluto del determinante). 1 2
+
+EJEMPLO 8
+
+Calcule el área del triángulo T que se muestra en la figura 4.12, con vértices ( -1, 4), (3, 1) y (2, 6).
+
+Solución De acuerdo con la ecuación (3), el área de T es
+
+$$\int \pi \int \pi \int \nu \int \nu \int \nu \int \nu \int \nu \int \nu \int \nu \int \nu \int \nu \int \nu \int \nu \int \nu \int \nu \int \nu \int \nu \int \nu \int \nu \int \nu \int \nu \int \nu \int \nu \int \nu \int \nu \int \nu \int \nu \int \nu \int \nu \int \nu \int \nu \int \nu \int \nu \int \nu \int \nu \int \nu \int \nu \int \nu \int \nu \int \nu \int \nu \int \nu \int \nu \int \nu \int \nu \int \nu \int \nu \int \nu \int \nu \int \nu \int \nu \int \nu \int \rho \int \rho \int \rho \int \rho \int \rho \int \rho \int \rho \int \rho \int \rho \int \rho \int \rho \int \rho \int \rho \int \rho \int \rho \int \rho \int \rho \int \rho \int \rho \int \rho \int \rho \int \rho \int \rho \int \rho \int \rho \int \rho \int \rho \int \rho \int \rho \int \rho \int \rho \int \rho \int \rho \int \rho \int \rho \int \rho \int \rho \int \rho \int \rho \int \rho \int \rp \int \rho \int \rp \int \rp \int \rp \int \rp \int \rp \int \rp \int \rp \int \rp \int \rp \int \rp \int \rp \int \rp \int \rp \int \rp \int \rp \int \rp \int \rp \int \rp \int \rp \int \rp \int \rp \int \rp \int \rp \int \rp \int \rp \int \rp \int \rp \int \rp \int \rp \int \rp \int \rp \int \rp \int \rp \int \rp \int \rp \int \rp \int \rp \int \rp \int \rp \int \rp \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rp \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rp \int \rp \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rp \int \rpc \int \rp \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rp \int \rp \int \rp \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rp \int \rpc \int \rpc \int \rp \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rp \int \rpc \int \rp \int \rp \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rp \int \rp \int \rpc \int \rp \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rp \int \rp \int \rp \int \rp \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rp \int \rpc \int \rpc \int \rpc \int \rp \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rp \int \rpc \int \rpc \int \rp \int \rp \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rp \int \rpc \int \rp \int \rpc \int \rp \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rp \int \rpc \int \rp \int \rp \int \rp \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rp \int \rp \int \rpc \int \rpc \int \rp \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rp \int \rp \int \rpc \int \rp \int \rp \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rp \int \rp \int \rp \int \rpc \int \rp \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc \int \rpc$$## DEFINICIÓN
+
+## EJEMPLO 9
+
+$$\Gamma ( 3 ) \, \text{$se$ deduce que} \\ \Gamma & \, \text{area del paralelogramo} = \left | \det \left ( \begin{bmatrix} x _ { 1 } & y _ { 1 } & 1 \\ x _ { 2 } & y _ { 2 } & 1 \\ x _ { 3 } & y _ { 3 } & 1 \end{bmatrix} \right ) \right |.$$
+
+Ahora suponga que tenemos el paralelogramo que se muestra en la figura 4.13. Como una diagonal divide al paralelogramo en dos triángulos iguales, con base en la ecuación (3) se deduce que
+
+Figura 4.13 ▶
+
+<!-- image -->
+
+## OPERACIONES CON VECTORES
+
+Sean u = ( x 1 , y 1 ) * y v = ( x 2 , y 2 ) dos vectores en el plano. La suma de los vectores u y v es el vector
+
+$$( x _ { 1 } + x _ { 2 }, y _ { 1 } + y _ { 2 } )$$
+
+y se denota mediante u + v . En consecuencia, los vectores sumaron sus componentes.
+
+$$\text{$MPLO $} \text{$Sea $u = (1, 2) $ y $v = (3, -4).$ Entonces} \\ & \text{$u + v = (1 + 3, 2 + ( - 4)) = (4, - 2).$} \text{ \quad \ } \text{$\mu$} \\ & \text{$\text{$Dalome internator de manera aecamátrica la cuma de vectores como cima. $Fin $la$}$$
+
+Podemos interpretar de manera geométrica la suma de vectores como sigue. En la figura 4.14, el vector de ( x 1 , y 1 ) a ( x 1 + x 2 , y 1 + y 2 ) también es v . Por lo tanto, el vector con cola O y cabeza ( x 1 + x 2 , y 1 + y 2 ) es u + v .
+
+Figura 4.15 ▲
+
+<!-- image -->
+
+Suma de vectores
+
+<!-- image -->
+
+También podemos describir u + v como la diagonal del paralelogramo definido por u y v , como se muestra en la figura 4.15.
+
+Por último, observe que la suma de vectores es un caso especial de la suma de matrices.
+
+$$\overline { * } \text{Recuerde que el vector u} = \left [ ^ { x _ { 1 } } \right ] también puede escribirse como ( x _ { 1 }, y _ { 1 } ).$$## EJEMPLO 10
+
+Figura 4.16
+
+## DEFINICIÓN
+
+Si u y v son como en el ejemplo 9, entonces u + v es como se muestra en la figura 4.16. ■
+
+▶
+
+<!-- image -->
+
+Si u = ( x 1 , y 1 ) y c es un escalar (un número real), el múltiplo escalar c u de u por c es el vector ( cx 1 , cy 1 ). Así, el múltiplo escalar c u de u por c se obtiene multiplicando cada componente de u por c .
+
+Si c &gt; 0, c u está en la misma dirección que u , mientras que si d &lt; 0, d u está en la dirección opuesta (figura 4.17).
+
+Figura 4.17 ▶ Multiplicación por un escalar
+
+<!-- image -->
+
+## EJEMPLO 11
+
+$$c \mathfrak { u } = 2 ( 1, - 2 ) = ( 2, - 4 ) \quad y \quad d \mathfrak { u } = - 3 ( 1, - 2 ) = ( - 3, 6 ), \\ \cdot \quad \cdot \quad \cdot \quad \cdot \cdot \cdot$$
+
+Si c = 2, d = -3 y u = (1, -2), entonces tal como se muestra en la figura 4.18.
+
+■
+
+El vector (0, 0) se denomina vector cero , y se denota mediante 0 . Si u es cualquier vector, resulta que (ejercicio T.2)
+
+$$u + 0. = u.$$
+
+También podemos mostrar (ejercicio T.3) que
+
+$$\begin{smallmatrix} & u + ( - 1 ) u = 0, & & & & ( 5 ) \\.. &.. &.. &.. &.. &.. &.. &.. \end{smallmatrix}$$
+
+escribimos ( -1) u como -u y le llamamos el negativo de u . Además, escribimos u + ( -1) v como u -v , y le llamamos la diferencia de u y v . El vector u -v se muestra en la figura 4.19(a).
+
+Observe que mientras el vector suma da una diagonal de un paralelogramo, el vector substracción proporciona la otra diagonal. Vea la figura 4.19(b).## Figura 4.18 ▶
+
+Figura 4.19 ▶
+
+<!-- image -->
+
+(a) Diferencia entre vectores.
+
+<!-- image -->
+
+<!-- image -->
+
+Aplicación (vectores en física) Cuando varias fuerzas actúan sobre un cuerpo, podemos determinar una sola fuerza, denominada fuerza resultante ,  que  tiene  el  efecto equivalente. La fuerza resultante puede determinarse por medio de vectores. El ejemplo siguiente ilustra este método.
+
+Suponga que se aplican dos fuerzas a un objeto: una de 12 libras a lo largo del eje negativo x , y una de 5 libras a lo largo del eje y positivo. Determine la magnitud y dirección de la fuerza resultante.
+
+## EJEMPLO 12
+
+Solución
+
+En la figura 4.20 hemos representado la fuerza a lo largo del eje x negativo por medio del vector , y la fuerza a lo largo del eje y positivo por medio del vector . La fuerza resultante es el vector De esta manera, la magnitud de la fuerza resultante es 13 libras, y su dirección es la que se indica en la figura. ■ - → OC = - → OA + - → OB . - → OB - → OA
+
+Figura 4.20 ▶
+
+<!-- image -->## EJEMPLO 13
+
+Los vectores también se utilizan en física para resolver problemas de velocidad, como se ilustra en el ejemplo siguiente.
+
+Suponga que un bote viaja hacia el este por un río, a razón de 4 millas por hora, mientras que la corriente fluye hacia el sur a 3 millas por hora. Determine la velocidad resultante del bote.
+
+Solución
+
+En la figura 4.21 hemos representado la velocidad del bote mediante el vector , y la velocidad de la corriente del río mediante el vector . La velocidad resultante es el vector Por lo tanto, la magnitud de la velocidad resultante es 5 millas por hora, y su dirección es la que se indica en la figura. ■ - → OC = - → OA + - → OB . - → OB - → OA
+
+<!-- image -->
+
+## ÁNGULO ENTRE DOS VECTORES
+
+Figura 4.22 ▲
+
+<!-- image -->
+
+El ángulo entre dos vectores distintos de cero, u = ( x 1 , y 1 ) y v = ( x 2 , y 2 ) es el ángulo θ , 0 ≤ θ ≤ π , que se muestra en la figura 4.22. Al aplicar la ley de los cosenos al triángulo de esa figura, obtenemos
+
+$$\| \mathfrak { u } - \mathfrak { v } \| ^ { 2 } = \| \mathfrak { u } \| ^ { 2 } + \| \mathfrak { v } \| ^ { 2 } - 2 \| \mathfrak { u } \| \| \mathfrak { v } \| \cos \theta.$$
+
+De acuerdo con (2),
+
+$$\| \mathfrak { u } - \mathfrak { v } \| ^ { 2 } & = ( x _ { 1 } - x _ { 2 } ) ^ { 2 } + ( y _ { 1 } - y _ { 2 } ) ^ { 2 } \\ & = x _ { 1 } ^ { 2 } + x _ { 2 } ^ { 2 } + y _ { 1 } ^ { 2 } + y _ { 2 } ^ { 2 } - 2 ( x _ { 1 } x _ { 2 } + y _ { 1 } y _ { 2 } ) \\ & = \| \mathfrak { u } \| ^ { 2 } + \| \mathfrak { v } \| ^ { 2 } - 2 ( x _ { 1 } x _ { 2 } + y _ { 1 } y _ { 2 } ).$$
+
+Si sustituimos esta expresión en (6) y despejamos cos θ (recuerde que, como u y v no son vectores nulos, entonces ‖ u ‖ /HS11005 0 y ‖ v ‖ /HS11005 0), obtenemos
+
+$$\cos \theta = \frac { x _ { 1 } x _ { 2 } + y _ { 1 } y _ { 2 } } { \| \mathfrak { u } \| \| \mathfrak { v } \| }.$$
+
+Recuerde que en la primera parte de la sección 1.3 se dijo que el producto punto de los vectores u = ( x 1 , y 1 ) y v = ( x 2 , y 2 ) se define como
+
+$$\mathbf u \cdot \mathbf v = x _ { 1 } x _ { 2 } + y _ { 1 } y _ { 2 }.$$
+
+En consecuencia, podemos rescribir (7) como
+
+$$\cos \theta = \frac { \mathbf u \cdot \mathbf v } { \| \mathbf u \| \, \| \mathbf v \| } \quad ( 0 \leq \theta \leq \pi ).$$## EJEMPLO 14
+
+Figura 4.23 ▲ Vectores ortogonales
+
+<!-- image -->
+
+y
+
+De aquí que
+
+$$\cos \theta = \frac { 6 } { \sqrt { 2 0 } \, \sqrt { 5 } } = 0. 6.$$
+
+Podemos obtener una aproximación al ángulo por medio de una calculadora o con la ayuda de una tabla de cosenos; en cualquier caso, encontramos que θ es aproximadamente 53°8 ′ o 0.93 radianes. ■
+
+Si u es un vector en R 2 , entonces podemos usar la definición del producto punto para escribir
+
+Si los vectores no nulos u y v forman ángulos rectos (figura 4.23), el coseno del ángulo θ entre ellos es cero. Por lo tanto, de acuerdo con (8), tenemos u · v = 0. Recíprocamente, si u · v = 0, cos θ = 0 y los vectores forman ángulos rectos. Así, los vectores no nulos u y v son perpendiculares u ortogonales si y sólo si u · v = 0. También diremos que dos vectores son ortogonales si por lo menos uno de ellos es el vector cero. Por lo tanto, el vector cero es ortogonal a todo vector. En consecuencia, ahora podemos decir que dos vectores u y v son ortogonales si y sólo si u · v = 0.
+
+## EJEMPLO 15
+
+$$\mathfrak { u } \cdot \mathfrak { v } = ( 2 ) ( 4 ) + ( - 4 ) ( 2 ) = 0.$$
+
+$$\| u \| = \sqrt { u } \cdot u. \\ \nu \, \text{forman $anoniloc}$$
+
+Los vectores u = (2, -4) y v = (4, 2) son ortogonales, ya que
+
+(Vea la figura 4.24.)
+
+Vectores ortogonales
+
+## TEOREMA 4.1
+
+■
+
+<!-- image -->
+
+(Propiedades del producto punto) Si u v , y w son vectores y c es un escalar , entonces:
+
+(a) u · u ≥ 0; u · u = 0 si y sólo si u = 0
+
+(b) u · v = v · u
+
+Si u = (2, 4) y v = -( 1, 2), entonces
+
+$$\mathfrak { u } \cdot \mathfrak { v } = ( 2 ) ( - 1 ) + ( 4 ) ( 2 ) = 6.$$
+
+Además,
+
+$$\| \mathbf u \| = \sqrt { 2 ^ { 2 } + 4 ^ { 2 } } = \sqrt { 2 0 }$$
+
+$$\| \mathbf v \| = \sqrt { ( - 1 ) ^ { 2 } + 2 ^ { 2 } } = \sqrt { 5 }.$$## EJEMPLO 16
+
+## EJEMPLO 17
+
+## EJEMPLO 18
+
+$$( c ) \ ( u + v ) \cdot w = u \cdot w + v \cdot w \\ ( d ) \ ( c u ) \cdot v = u \cdot ( c v ) = c ( u \cdot v )$$
+
+Demostración
+
+Ejercicio T.7.
+
+■
+
+## VECTORES UNITARIOS
+
+Un vector unitario es un vector cuya longitud es 1. Si x es cualquier vector no nulo (es decir, distinto de cero), el vector
+
+$$u = \frac { 1 } { \| \mathbf x \| } \, \mathbf x$$
+
+es un vector unitario en dirección x (ejercicio T.5).
+
+Sea x = -( 3, 4). Entonces,
+
+$$\| \mathbf x \| = \sqrt { ( - 3 ) ^ { 2 } + 4 ^ { 2 } } = 5.$$
+
+Por lo tanto, el vector es un vector unitario, ya que u = 1 5 ( -3, 4) = -3 5 , 4 5
+
+$$\| \mathfrak { u } \| = \sqrt { \left ( - \frac { 3 } { 5 } \right ) ^ { 2 } + \left ( \frac { 4 } { 5 } \right ) ^ { 2 } } = \sqrt { \frac { 9 + 1 6 } { 2 5 } } = 1.$$
+
+Asimismo, u está en dirección x (figura 4.25).
+
+■
+
+Vectores ortogonales
+
+<!-- image -->
+
+<!-- image -->
+
+En R 2 existen dos vectores unitarios que tienen una importancia especial. Son i = (1, 0) y j = (0, 1), los vectores unitarios a lo largo de los ejes positivos x y y , respectivamente (figura 4.26).
+
+Si u = ( x 1 , y 1 ) es cualquier vector en R 2 , podemos escribir u en términos de i y j como
+
+$$u = x _ { 1 } i + y _ { 1 } j.$$
+
+Si entonces
+
+Los vectores i y j
+
+$$\mathfrak { u } = ( 4, - 5 ),$$
+
+$$u = 4 i - 5 j.$$
+
+son ortogonales [vea el ejercicio 23(b)]. ■## Términos clave
+
+Origen
+
+Valor absoluto
+
+Coordenada
+
+Eje coordenado
+
+Eje x
+
+Eje y
+
+Sistemas de coordenadas rectangulares (o cartesianas)
+
+2-espacio
+
+Dirección de un segmento de recta dirigido Magnitud de un segmento de recta dirigido
+
+Vector
+
+Componentes de un vector
+
+Cabeza de un vector
+
+Cola de un vector
+
+Vectores iguales
+
+Longitud (magnitud o norma) de un vector Vectores paralelos
+
+Suma de vectores
+
+Múltiplo escalar de vectores
+
+Vector cero (nulo)
+
+Negativo de un vector
+
+Diferencia de vectores
+
+Fuerza resultante
+
+Producto punto
+
+Vectores perpendiculares (u ortogonales) Vector unitario
+
+## 4.1 Ejercicios
+
+- 1. Grafique los puntos siguientes en R 2 .
+- 2. Trace un segmento de recta dirigido en R 2 , que represente cada uno de los vectores siguientes.
+
+(a) (2, - 1)
+
+(b) ( - 1, 2)
+
+(c) (3, 4)
+
+(e) (0, 2)
+
+(d) ( -3, -2)
+
+(f) (0, -3)
+
+$$\tilde { \Phi } _ { 1 } & \, \tilde { \Phi } _ { 2 } \, \Phi _ { 3 } \, \Phi _ { 4 } \, \Phi _ { 5 } \, \Phi _ { 6 } \, \Phi _ { 7 } \, \Phi _ { 8 } \, \Phi _ { 9 } \, \Phi _ { 9 } \, \Phi _ { 9 } \, \Phi _ { 9 } \, \Phi _ { 9 } \, \Phi _ { 9 } \, \Phi _ { 9 } \, \Phi _ { 9 } \, \Phi _ { 9 } \, \Phi _ { 9 } \, \Phi _ { 9 } \, \Phi _ { 9 } \, \Phi _ { 9 } \, \Phi _ { 9 } \, \Phi _ { 9 } \, \Phi _ { 9 } \, \Phi _ { 9 } \, \Phi _ { 9 } \, \Phi _ { 9 } \, \Phi _ { 9 } \, \Phi _ { 9 } \, \Phi _ { 9 } \, \Phi _ { 9 } \\ ( a ) & \, \tilde { \Phi } _ { 1 } & = \begin{bmatrix} - 2 \\ 3 \end{bmatrix} & & ( b ) & \, \tilde { \Phi } _ { 2 } = \begin{bmatrix} 3 \\ 4 \end{bmatrix} \\ ( c ) & \, \tilde { \Phi } _ { 3 } & = \begin{bmatrix} - 3 \\ - 3 \end{bmatrix} & & ( d ) & \, \tilde { \Phi } _ { 4 } = \begin{bmatrix} 0 \\ - 3 \end{bmatrix} \\ & & \, \tilde { \Phi } _ { 2 } \end{bmatrix}$$
+
+- 3. Determine la cabeza del vector , cuya cola está en (3, 2). Haga una gráfica. -2 5
+- Determine la cabeza del vector , cuya cola está en 2 5
+- 4. (1, 2). Haga una gráfica.
+- 5. Determine u + v , u -v , 2 u y 3 u - 2 v , si (a) u = (2, 3), v = -( 2, 5) (b) u = (0, 3), v = (3, 2) (c) u = (2, 6), v (3, 2)
+- 6. Repita el ejercicio 5 para
+- (a) u = -( 1, 3), v = (2, 4)
+- (c) u = (3, 2), v = -( 2, 0)
+- (b) u = -( 4, -3), v = (5, 2)
+- 7. Sea u = (1, 2), v = -( 3, 4), w = ( w 1 , 4) y x = -( 2, x 2 ). Determine w 1 y x 2 de modo que
+
+$$( a ) \ w & = 2 u \quad ( b ) \ \frac { 3 } { 2 } x = v \quad ( c ) \ w + x = u \\ \intertext { a a n b - l - M \ 3 \ v - L \ - S \ v v - m. m. } \ D o t e r m i n e$$
+
+- 8. Sea u ( 4, 3), v (2, 5) y w ( w 1 , w 2 ). Determine w y w tales que
+- = -= -= 1 2 (a) w = 2 u + 3 v (b) u + w = 2 u -v (c) w = 5 2 v
+
+9. Determine la longitud de los vectores siguientes.
+
+(a) (1, 2)
+
+(b) ( - 3, - 4)
+
+(c) (0, 2)
+
+(d) ( - 4, 3)
+
+10. Determine la longitud de los vectores siguientes.
+
+(b) (3, 0)
+
+(a) ( -2, 3)
+
+(c) ( -4, -5)
+
+(d) (3, 2)
+
+- 11. Determine la distancia entre los siguientes pares de puntos.
+
+(a) (2, 3), (3, 4) (b) (0, 0), (3, 4) (c) ( -3, 2), (0, 1) (d) (0, 3), (2, 0)
+
+- 12. Determine la distancia entre los siguientes pares de puntos.
+- (a) (4, 2), (1, 2) (b) ( -2, -3), (0, 1) (c) (2, 4), ( -1, 1) (d) (2, 0), (3, 2)
+- 13. ¿Es posible escribir el vector ( -5, 6) como una combinación lineal (definida antes del ejemplo 4, sección 1.3) de los vectores (1, 2) y (3, 4)?
+- 14. De ser posible, determine escalares c 1 y c 2 , por lo menos uno distinto de cero, tales que
+- 15. Determine el área del triángulo con vértices (3, 3), ( -1, -1), (4, 1).
+- 16. Determine el área del triángulo rectángulo con vértices (0, 0), (0, 3), (4, 0). Verifique por medio de la fórmula A = 1 - (base)(altura). 2
+- 17. Determine el área del paralelogramo con vértices (2, 3), (5, 3), (4, 5), (7, 5).
+- 18. Sea Q el cuadrilátero con vértices ( -2, 3), (1, 4), (3, 0) y ( -1, -3). Determine el área de Q.
+- 19. Determine un vector unitario en dirección x .
+
+<!-- image -->
+
+(a) x = (3, 4) (b) x = -( 2, -3) (c) x = (5, 0)
+
+- 20. Determine un vector unitario en dirección x .
+
+(a) x = (2, 4) (b) x = (0, -2)
+
+(c) x = -( 1, -3)
+
+- 21. Determine el coseno del ángulo que forma cada par de vectores u y v .
+- (a) u = (1, 2), v = (2, -3)
+- (c) u = -( 3, -4), v = (4, -3)
+- (b) u = (1, 0), v = (0, 1)
+- (d) u = (2, 1), v = -( 2, -1)- 22. Determine el coseno del ángulo que forma cada par de vectores u y v .
+- (a) u = (0, -1), v = (1, 0)
+- (c) u = (2, -1), v = -( 3, -2)
+- (b) u = (2, 2), v = (4, -5)
+
+(d) u = (0, 2), v = (3, -3)
+
+- 23. Demuestre que
+
+(a) i · i = j · j = 1 (b) i · j = 0
+
+- 24. ¿Cuáles de los vectores u 1 = (1, 2), u 2 = (0, 1), u 3 = ( -2, -4), u 4 = -( 2, 1), u 5 = (2, 4), u 6 = -( 6, 3) son (o están)
+- (a) ortogonales?
+- (b) en la misma dirección?
+- (c) en direcciones opuestas?
+- 25. Determine todas las constantes a tales que los vectores ( a , 4) y (2, 5) sean paralelos.
+
+## Ejercicios teóricos
+
+- T.1. Demuestre cómo podemos asociar un punto en el plano con cada par ordenado ( x , y ) de números reales.
+- T.2. Demuestre que u + 0 = u .
+- T.4. Demuestre que si c es un escalar, entonces ‖ c u ‖ = | c |‖ u ‖ .
+- T.3. Demuestre que u + -( 1) u = 0 .
+- T.5. Demuestre que si x es un vector no nulo, entonces
+
+$$u = \frac { 1 } { \| \mathbf x \| } \, \mathbf x$$
+
+es un vector unitario en dirección x .
+
+## Ejercicios con MATLAB
+
+Los ejercicios siguientes utilizan la rutina vec2demo , que proporciona una muestra gráfica de vectores en el plano. Para un par de vectores u = ( x 1 , y 1 ) y v = ( x 2 , y 2 ), la rutina vec2demo gráfica u y v , u + v , u -v y un múltiplo escalar. Una vez que los vectores u y v se han introducido a MATLAB , escriba
+
+## vec2demo u ( , v )
+
+Para obtener información adicional, utilice help vec2demo .
+
+$$<_OCaml_>$$
+
+- 26. Determine todas las constantes a tales que los vectores ( a , 2) y ( a , -2) sean ortogonales.
+- 28. Escriba cada uno de los vectores siguientes como una matriz de 2 × 1.
+- 27. Escriba cada uno de los vectores siguientes en términos de i y  . j (a) (1, 3) (b) ( -2, -3) (c) ( -2, 0) (d) (0, 3)
+
+$$( a ) & \ 3 i - 2 j \quad ( b ) & \ 2 i \quad ( c ) & - 2 i - 3 j \\ T n & \text{for} \, \acute { c } \, \text{emnificado nor} \, \sum \text{ramoload} \, \complement \, \text{un formo}$$
+
+- 29. Un barco es empujado por un remolcador con una fuerza de 300 libras, a lo largo del eje y negativo, mientras que otro remolcador lo empuja en la dirección del eje x negativo con una fuerza de 400 libras. Determine la magnitud e indique en un dibujo la dirección de la fuerza resultante.
+- 30. Suponga que un aeroplano vuela con una rapidez de 260 kilómetros por hora, mientras el viento sopla hacia el oeste a 100 kilómetros por hora. En una figura, indique la dirección aproximada que el aeroplano debe seguir para volar directamente hacia el sur. ¿Cuál será la rapidez resultante?
+- T.6. Demuestre que
+
+(a) 1 u = u
+
+- T.7. Demuestre el teorema 4.1.
+
+(b) ( rs ) u = r ( s u ), donde r y s son escalares
+
+- T.8. Demuestre que si w es ortogonal a u y a v , entonces w es ortogonal a r u + s v , donde r y s son escalares.
+- T.9. Sea θ el ángulo entre los vectores no nulos u = ( x 1 , y 1 ) y v = ( x 2 , y 2 ) en el plano. Demuestre que si u y v son paralelos, entonces cos θ = ±1.
+
+(b) u = -[ 3  1], v = [2  2]
+
+$$( c ) \ u = [ 5 \ 2 ], \, \bar { v } = [ - 3 \ 3 ] \\ \tilde { v } \ n n, \, \tilde { v } \ n n, \, \tilde { v } \ n n, \, \tilde { v } \ n n, \, \tilde { v } \ n n, \, \tilde { v } \ n n, \, \tilde { v } \ n n, \, \tilde { v } \ n n, \, \tilde { v } \ n n, \, \tilde { v } \ n n, \, \tilde { v } \ n n, \, \tilde { v } \ n n, \, \tilde { v } \ n n, \, \tilde { v } \ n n, \, \tilde { v } \ n n, \, \tilde { v } \ n n, \, \tilde { v } \ n n, \, \tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde{v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ that { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde {v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v} \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \tilde{v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde{v }\ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ t \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ tilde { v } \ { \cdot \, \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \, \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cd. \,.$$
+
+- ML.2. Utilice la rutina vec2demo con cada uno de los pares de vectores siguientes. (En MATLAB se utilizan los corchetes.)
+
+(a)
+
+u
+
+[2
+
+2],
+
+v
+
+[1
+
+3]
+
+(b) u = [0 3], v = -[ 2 0]
+
+=
+
+-
+
+=
+
+$$( c ) \, \mathfrak { u } = [ 4 \ - 1 ], \mathfrak { v } = [ - 3 \ 5 ] \\ \mathfrak { r } \ \mathfrak { r } \ \mathfrak { r } \ \mathfrak { r } \ \mathfrak { r } \ \mathfrak { r } \ \mathfrak { r } \ \mathfrak { r } \ \mathfrak { r } \ \mathfrak { r } \ \mathfrak { r } \ \mathfrak { r } \ \mathfrak { r } \ \mathfrak { r } \ \mathfrak { r } \ \mathfrak { r } \ \mathfrak { r } \ \mathfrak { r } \ \mathfrak { r } \ \mathfrak { r } \ \mathfrak { r } \ \mathfrak { r } \ \mathfrak { r } \ \mathfrak { r } \ \mathfrak { r } \ \mathfrak { r }$$
+
+- ML.3. Seleccione un par de vectores u y v para utilizarlos con vec2demo .## EJEMPLO 1
+
+## DEFINICIÓN
+
+En esta sección analizaremos los n -vectores desde el punto de vista geométrico, generalizando los conceptos que se estudiaron en la sección anterior. El caso n = 3 es de interés especial, lo examinaremos a detalle.
+
+Como ya hemos visto en la primera parte de la sección 1.3, un n -vector es una matriz de n × 1
+
+donde u 1 , u 2 , . . . , un son números reales, que se llaman componentes de u . Como un u -vector es una matriz de n × 1, los n -vectores
+
+$$u = \begin{bmatrix} u _ { 1 } \\ u _ { 2 } \\ \vdots \\ u _ { n } \end{bmatrix}, \\ ; \text{ reales, que se l} _ { - - - - - - - - }$$
+
+$$\intertext { a e n } \times 1, \, \text{ios} \, n \text{-vectors} \\ \mathbf u = \begin{bmatrix} u _ { 1 } \\ u _ { 2 } \\ \vdots \\ u _ { n } \end{bmatrix} \quad y \quad \mathbf v = \begin{bmatrix} v _ { 1 } \\ v _ { 2 } \\ \vdots \\ v _ { n } \end{bmatrix} \\ ( 1 \leq i \leq n ).$$
+
+son iguales si ui = v i (1 ≤ ≤ i n ).
+
+$$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{																																																																																																																																																																																																								                                                                                                                                                                                                        
+                                                                                                                                                                                                       	                                                                                                                                                                                                      
+\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{ $\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{#}}}}}}}}}}}}}}
+\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text$$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text
+$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text<$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text#$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text	$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text`$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text1$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text.$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text'$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$\text{$$
+
+componentes difiere.
+
+■
+
+El conjunto de todos los n -vectores se denota mediante R n , y se llama nespacio . Cuando no es necesario especificar el valor de n , nos referimos a los n -vectores simplemente como vectores . Los números reales se llaman escalares . Las componentes de un vector son números reales y, por lo tanto, las componentes de un vector son escalares.
+
+## OPERACIONES CON VECTORES
+
+Sean
+
+$$u = \begin{bmatrix} u _ { 1 } \\ u _ { 2 } \\ \vdots \\ u _ { n } \end{bmatrix} \quad y \quad v = \begin{bmatrix} v _ { 1 } \\ v _ { 2 } \\ \vdots \\ v _ { n } \end{bmatrix} \\ \text{sum} \, de los vectores u \, y \, v \, es \, el \, vector$$
+
+dos vectores en R n . La suma de los vectores u y v es el vector y se denota como u + v .
+
+$$\begin{bmatrix} u _ { 1 } + v _ { 1 } \\ u _ { 2 } + v _ { 2 } \\ \vdots \\ u _ { n } + v _ { n } \end{bmatrix},$$$$\frac { \Gamma \Gamma \Gamma \Gamma \Gamma } { 2 } \left ( \begin{matrix} 1 \\ - 2 \\ 3 \end{matrix} \right ) \, y \, \left [ \begin{matrix} 1 \\ 3 \\ - 3 \end{matrix} \right ], \text{son vectores en $R^{3}$, entonces}$$
+
+$$L ^ { n } \, _ { \mu } \, _ { \nu } \, _ { \nu } = \left [ \begin{matrix} 1 + 2 \\ - 2 + 3 \\ 3 + ( - 3 ) \end{matrix} \right ] = \left [ \begin{matrix} 3 \\ 1 \\ 0 \end{matrix} \right ] \, _ { \nu } \, _ { \nu }$$
+
+$$\text{Si} \begin{bmatrix} 1 \\ - 2 \\ 3 \end{bmatrix} \ y \ \begin{bmatrix} 2 \\ 3 \\ - 3 \end{bmatrix}, s o$$
+
+## DEFINICIÓN Si
+
+$$u = \begin{bmatrix} u _ { 1 } \\ u _ { 2 } \\ \vdots \\ u _ { n } \end{bmatrix}$$
+
+es un vector en R n y c es un escalar, el múltiplo escalar c u de u por c es el vector
+
+$$\begin{bmatrix} a, e | \mu | i \\ \left [ \begin{matrix} c u _ { 1 } \\ c u _ { 2 } \\ \vdots \\ c u _ { n } \end{matrix} \right ]. \end{bmatrix}$$
+
+$$\cdot 2 ) \left [ \begin{matrix} 2 \\ 3 \\ - 1 \end{matrix} \right ] = \left [ \begin{matrix} - 4 \\ - 6 \\ 2 \end{matrix} \right ].$$
+
+$$\begin{array} { c } \langle \, \stackrel { \rangle } { \longrightarrow } \\ \, \stackrel { \rangle } { \longrightarrow } \\ \, \stackrel { \rangle } { \longrightarrow } \\ \, \stackrel { \rangle } { \longrightarrow } \\ \, \stackrel { \rangle } { \longrightarrow } \\ \, \stackrel { \rangle } { \longrightarrow } \\ \, \stackrel { \rangle } { \longrightarrow } \\ \, \stackrel { \rangle } { \longrightarrow } \\ \, \stackrel { \rangle } { \longrightarrow } \\ \, \stackrel { \rangle } { \longrightarrow } \\ \, \stackrel { \rangle } { \longrightarrow } \\ \, \stackrel { \rangle } { \longrightarrow } \\ \, \stackrel { \rangle } { \shortrightarrow } \\ \, \stackrel { \rangle } { \longrightarrow } \\ \, \stackrel { \rangle } { \longrightarrow } \\ \, \stackrel { \rangle } { \longrightarrow } \\ \, \stackrel { \rangle } { \longrightarrow } \\ \, \stackrel { \rangle } { \longrightarrow } \\ \, \stackrel { \rangle } { \longrightarrow } \\ \, \stackrel { \rangle } { \longrightarrow } \\ \, \stackrel { \rangle } { \longrightarrow } \\ \, \stackrel { \rangle } { \longrightarrow } \\ \, \stackrel { \rangle } { \longrightarrow } \\ \, \stackrel { \rangle } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stack | \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \shortrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \rangle } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stack | \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightroup } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� }{ \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel {\r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \,\stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow} \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } {\longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \langle \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \rightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r� } { \longrightarrow } \\ \, \stackrel { \r{{ \r{{ \longrightarrow } \\ \, \stackrel { \r{{ \longrightarrow } \\ \, \stackrel { \r{{ \longrightarrow } \\ \, \stackrel { \r{{ \longrightarrow } \\ \, \stackrel { \r{{ \longrightarrow } \\ \, \stackrel { \r{{ \longrightarrow } \\ \, \stackrel { \r{{ \longrightarrow } \\ \, \stackrel { \r{{ \longrightarrow } \\ \, \stackrel { \r{{ \longrightarrow } \\ \, \stackrel { \r{{ \longrightarrow } \\ \, \stackrel { \r{{ \longrightarrow } \\ \, \stackrel { \r{{ \longrightarrow } \\ \, \stackrel { \r{{ \longrightarrow } \\ \, \stackrel { \r{{ \longrightarrow } \\ \, \stackrel { \r{{ \rightarrow } \\ \, \stackrel { \r{{ \longrightarrow } \\ \, \stackrel { \r{{ \longright } \\ \, \stackrel { \r{{ \longright } \\ \, \stackrel { \r{{ \longright } \\ \, \stackrel { \r{{ \longright } \\ \, \stackrel { \r{{ \longright } \\ \, \stackrel { \r{{ \longright } \\ \, \stackrel { \r{{ \longright } \\ \, \stackrel { \r{{ \longright } \\ \, \stackrel { \r{{ \longright } \\ \, \stackrel { \r{{ \longright } \\ \, \stackrel { \r{{ \longright } \\ \, \stackrel { \r{{ \longright } \\ \, \stackrel { \r{{ \longright } \\ \, \stackrel { \r{{ \longright } \\ \, \stackrel { \r{{ \longright } \\ \r{{ \longright } \\ \, \stackrel { \r{{ \longright } \\ \, \stackrel { \r{{ \longright } \\ \, \stackrel { \r{{ \longright } \\ \, \stackrel { \r{{ \longright } \\ \, \stackrel { \r{{ \longright } \\ \, \stackrel { \r{{ \longright } \\ \, \stackrel { \r{{ \longright } \\ \, \stackrel { \r{{ \longright } \\ \, \stackrel { \r{{ \longright } \\ \, \stackrel { \$$
+
+$$c u = ( - 2 ) \begin{bmatrix} 2 \\ 3 \\ - 1 \\ 2 \end{bmatrix} = \begin{bmatrix} - 4 \\ - 6 \\ 2 \\ - 4 \end{bmatrix}. \\ \ e \ e \ e \ e \ e \ e \ e \ e \ e \ e \ e \ e \ e \ e \ e \ e \ e \ e \ e \ e \ e \ e \ e \ e \ e \ e \ e \ e \ e \ e \ e \ e \ e \ e \ e \ e \ e \ e \ e \ e \ e \ e \ e \ e \ e \ e \ e \ e \ e \ e \ e \ e \ e \ e \ e \ e \ e \ e \ e \ e \ e \ e \ e \ e \ e \ e \ e \ e \ e \ e \ e \ e \ e \ e \ e \ e \ e \ e \ e \ e \ e \ e \ e \ e \ e \ e \ e \ e \ e \ e \ e \ e \ e \ e \ e \ e \ e \ e \ e \ e \ a l e n d i t e n s o l e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i n t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i c o n d e n t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e nd i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e nd e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i s o n d e n t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d e n t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i s o n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t i n t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t e n d i t u n \end{bmatrix}$$
+
+Las operaciones de suma de vectores y multiplicación por un escalar satisfacen las siguientes propiedades.
+
+Sean u v , y w vectores cualesquiera en R n ; sean c y d escalares arbitrarios. Entonces, ( α ) u + v es un vector en R n ( es decir, R n es cerrado bajo la operación de suma de vectores ).
+
+- (a) u + v = v + u
+- (c) Existe un vector 0 en R n tal que u + 0 = 0 + u = u para toda u en R n .
+- (b) u + ( v + w ) = ( u + v ) + w
+- (d) Para cada vector u en R n , existe un vector -u en R n tal que u + -( u) = 0 .
+- ( β ) c u es un vector en R n ( es decir, R n es cerrado bajo la operación de multiplicación por un escalar ).
+- (e) c ( u + v ) = c u + c v
+- (g) c d ( u ) = ( cd ) u
+- (f) ( c + d ) u = c u + d u
+- (h) 1 u = u
+
+## TEOREMA 4.2Demostración
+
+## EJEMPLO 4
+
+( α ) y ( β ) son consecuencia inmediata de las definiciones de suma vectorial y multiplicación por un escalar. Aquí verificaremos (f) y dejaremos el resto de la demostración al lector (ejercicio T.1). Por lo tanto,
+
+$$\text{cacon por un escalar. Aqui verificaremos (i) y dejaremos ei resto de la demostracion} \\ \text{al locer (ejercicio T.1). Por lo tanto,} \\ ( c + d ) \mathfrak { u } = ( c + d ) \begin{bmatrix} u _ { 1 } \\ u _ { 2 } \\ \vdots \\ u _ { n } \end{bmatrix} = \begin{bmatrix} ( c + d ) u _ { 1 } \\ ( c + d ) u _ { 2 } \\ \vdots \\ ( c + d ) u _ { n } \end{bmatrix} = \begin{bmatrix} c u _ { 1 } + d u _ { 1 } \\ c u _ { 2 } + d u _ { 2 } \\ \vdots \\ c u _ { n } + d u _ { n } \end{bmatrix} \\ = \begin{bmatrix} c u _ { 1 } \\ c u _ { 2 } \\ \vdots \\ c u _ { n } \end{bmatrix} + \begin{bmatrix} d u _ { 1 } \\ d u _ { 2 } \\ \vdots \\ d u _ { n } \end{bmatrix} = c \begin{bmatrix} u _ { 1 } \\ u _ { 2 } \\ \vdots \\ u _ { n } \end{bmatrix} + d \begin{bmatrix} u _ { 1 } \\ u _ { 2 } \\ \vdots \\ u _ { n } \end{bmatrix} = c u + d \mathfrak { u }. \\ \text{$e$ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ } $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $
+$ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $
+ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $$ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $$ } $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $ $$
+$ \text{$
+$ Es fácil demostrar que los vectores $ 0 $ y - \mathfrak { u } \, en las propiedades (c) $ y (d) $son $ \tilde { u } \text{incos.} \\ \text{Además,}$$
+
+Es fácil demostrar que los vectores 0 y u en las propiedades (c) y (d) son únicos. Además,
+
+$$\mathfrak { o } = \begin{bmatrix} \mathfrak { m } ^ { 0 } \\ 0 \\ \vdots \\ 0 \end{bmatrix}$$
+
+y si , entonces . El vector 0 es el vector cero y -u es el negativo de u . Resulta sencillo verificar (ejercicio T.2) que -u =     -u 1 -u 2 . . . -un     u =     u 1 u 2 . . . un    
+
+$$- u = ( - 1 ) u. \\ \cdot \cdot \cdot$$
+
+También escribiremos u + -( v ) como u -v , y lo llamaremos la diferencia de u y v .
+
+Si u y v son como en el ejemplo 2, entonces
+
+Como en el caso de R 2 , identificamos al vector
+
+$$\begin{array} { l l } \text{como en el ejemplo 2, entonces} \\ \text{u} - \text{v} = \begin{bmatrix} 1 - & 2 \\ - 2 - & 3 \\ 3 - ( - 3 ) \end{bmatrix} = \begin{bmatrix} - 1 \\ - 5 \\ 6 \end{bmatrix}. \\ \text{n el caso de $R$^{2}$, identificamos al vector}$$
+
+$$\text{amos al} \\ \begin{bmatrix} u _ { 1 } \\ u _ { 2 } \\ \vdots \\ u _ { n } \end{bmatrix} \\ \text{do que $f$}.$$
+
+con el punto ( u 1 , u 2 , . . . , un ), de modo que podamos utilizar indistintamente los puntos y los vectores. Así, podemos considerar R n como si estuviera constituido por vectores o por puntos, y también podemos escribir
+
+$$\mathbf u = ( u _ { 1 }, u _ { 2 }, \dots, u _ { n } ). \\ \cdot \cdot \cdot \cdot \cdot \cdot$$
+
+Además, un n -vector es una matriz de n × 1, la suma de vectores es la suma de matrices, y la multiplicación por un escalar es simplemente la operación de multiplicación de una matriz por un número real. Así, R n se puede ver como el conjunto de todas las matrices de n × 1 con las operaciones de suma matricial y multiplicación por un escalar. La clave aquí es que no importa cómo veamos a R n , como n-vectores, puntos o matrices de n × 1, el comportamiento algebraico es siempre el mismo.## EJEMPLO 5
+
+Aplicación Los vectores en R n se pueden utilizar para el manejo de grandes cantidades de datos. De hecho, varios productos de software para computadoras, entre los que destaca MATLAB, hacen amplio uso de los vectores. El siguiente ejemplo ilustra estas ideas.
+
+(Aplicación: control de inventario) Supongamos que una tienda maneja 100 artículos diferentes. El inventario disponible al inicio de la semana se puede describir mediante el vector de inventario u en R 100 . El número de artículos vendidos al final de la semana puede describirse mediante el vector v , y el vector
+
+$$u - v$$
+
+representa el inventario al final de la semana. Si la tienda recibe un nuevo embarque de artículos, representado por el vector w , el nuevo inventario será
+
+$$u - v + w.$$
+
+## VISUALIZACIÓN DE R 3
+
+No podemos trazar dibujos de R n para n &gt; 3. Sin embargo, como R 3 es el mundo en que vivimos, podemos visualizarlo de manera similar a la que utilizamos para R 2 .
+
+Primero fijamos un sistema de coordenadas eligiendo un punto, denominado origen , y tres rectas, llamadas ejes coordenados , cada una de las cuales pasa por el origen, de modo que sea perpendicular a las otras dos. Estas rectas se llaman ejes x , y y z . En cada uno de los ejes coordenados elegimos un punto para fijar las unidades de longitud y las direcciones positivas. Con frecuencia, pero no siempre, se escoge la misma unidad de longitud en los tres ejes coordenados. En las figuras 4.27(a) y (b) se muestran dos de los muchos sistemas de coordenadas posibles. El sistema que aparece en la figura 4.27(a) se llama sistema de coordenadas de mano derecha ; el que aparece en la figura 4.27(b) se llama de mano izquierda . Un sistema de mano derecha se caracteriza por la siguiente propiedad: si doblamos los dedos de la mano derecha en la dirección de un giro de 90° desde el eje x positivo hasta el eje y positivo, el pulgar apuntará en dirección del eje z positivo (figura 4.28). En este libro utilizamos un sistema de coordenadas de mano derecha.
+
+(a)  Sistema de coordenadas de mano derecha.
+
+<!-- image -->
+
+La proyección de un punto P en el espacio sobre una recta L es el punto Q que se obtiene al intersecar L con la recta L ′ que pasa por P y es perpendicular a L (figura 4.29).
+
+La coordenada x del punto P es el número asociado con la proyección de P sobre el eje x ; las coordenadas y y z se definen de manera análoga. Estos tres números son las coordenadas de P . Así, a cada punto del espacio le asociamos una terna ordenadaz
+
+<!-- image -->
+
+( x, y, z ) de números reales y, recíprocamente, a cada terna ordenada de números reales le asociamos un punto en el espacio. Esta correspondencia se llama sistema de coordenadas rectangulares . Para denotar un punto del espacio, escribimos P x, y, z ( ) o simplemente ( x, y, z ).
+
+## EJEMPLO 6
+
+En las figuras 4.30(a) y (b) mostramos dos puntos y sus coordenadas.
+
+■
+
+Figura 4.30 ▶
+
+<!-- image -->
+
+El plano xy es el que está determinado por los ejes x y y . Los planos xz y yz se definen de manera similar.
+
+En R 3 , los componentes de un vector u se denotan como x 1 , y 1 , z 1 .  Por lo tanto, u = ( x 1 , y 1 , z 1 ).
+
+Como en el plano, a cada vector u = ( x 1 , y 1 , z 1 ) le asociamos el segmento de recta  dirigido ,  cuya  cola  está  en O (0,  0,  0)  y  cuya  cabeza  es P x ( 1 , y 1 , z 1 )  [figura 4.31(a)]. Una vez más, como en el plano, en las aplicaciones físicas trabajaremos con frecuencia con un segmento de recta dirigido , desde el punto P x ( 1 , y 1 , z 1 ) (que es el origen) hasta el punto Q x ( 2 , y 2 , z 2 ), como se muestra en la figura 4.31(b). Tal segmento de recta dirigido se llama también vector en R 3 , o simplemente vector con cola P x , ( 1 y1, z 1 ) y cabeza Q x ( 2 , y 2 , z 2 ). Sus componentes son x 2 -x 1 , y 2 -y 1 y z 2 -z 1 . Dos de estos vectores en R 3 son iguales si sus componentes son iguales. En consecuencia, el vector , de la figura 4.31(b), también puede representarse mediante el vector ( x 2 -x 1 , y 2 -y 1 , z 2 -z 1 ) con cola O y cabeza P ″ ( x 2 -x 1 , y 2 -y 1 , z 2 -z 1 ). - → PQ - → PQ - → OPFigura 4.31 ▶
+
+<!-- image -->
+
+<!-- image -->
+
+)
+
+Pronto definiremos la longitud de un vector en R n y el ángulo entre dos vectores distintos de cero en R n . Una vez hecho esto, podremos demostrar que dos vectores distintos de cero en R 3 son iguales si y sólo si cualesquiera segmentos de recta dirigidos que los representen son paralelos y tienen la misma dirección y la misma longitud.
+
+La suma u + v de los vectores u = ( x 1 , y 1 , z 1 ) y v = ( x 2 , y 2 , z 2 ) en R 3 es la diagonal del paralelogramo determinado por u y v , como se muestra en la figura 4.32.
+
+El lector habrá observado que la figura 4.32 se parece mucho a la figura 4.14 de la sección 4.1, pues en R 2 y en R 3 el vector u + v es la diagonal del paralelogramo determinado por u y v .
+
+Figura 4.32 ▲
+
+<!-- image -->
+
+<!-- image -->
+
+El múltiplo escalar en R 3 se muestra en la figura 4.33, que se parece a la figura 4.17 de la sección 4.1.
+
+## PRODUCTO PUNTO EN R n
+
+A continuación definiremos el concepto de longitud de un vector en R n , generalizando la idea correspondiente en R 2 .## DEFINICIÓN
+
+## EJEMPLO 7
+
+## EJEMPLO 8
+
+## EJEMPLO 9
+
+La longitud (también llamada magnitud o norma ) del vector u = ( u 1 , u 2 , . . . , un ) en R n es
+
+$$\| \mathfrak { u } \| = \sqrt { u _ { 1 } ^ { 2 } + u _ { 2 } ^ { 2 } + \cdots + u _ { n } ^ { 2 } }.$$
+
+Asimismo, definimos la distancia entre el punto ( u 1 , u 2 , . . . , un ) y el origen mediante (1). La distancia entre los puntos ( u 1 , u 2 , . . . , un ) y ( v 1 , v 2 , . . . , v n ) se define entonces como la longitud del vector u -v , donde
+
+$$\mathfrak { u } = ( u _ { 1 }, u _ { 2 }, \dots, u _ { n } ) \quad y \quad \mathbf v = ( v _ { 1 }, v _ { 2 }, \dots, v _ { n } ).$$
+
+En consecuencia, esta distancia está dada por
+
+$$\| \mathfrak { u } - \mathfrak { v } \| = \sqrt { ( u _ { 1 } - v _ { 1 } ) ^ { 2 } + ( u _ { 2 } - v _ { 2 } ) ^ { 2 } + \cdots + ( u _ { n } - v _ { n } ) ^ { 2 } }.$$
+
+Sean u = (2, 3, 2, -1) y v = (4, 2, 1, 3). Entonces,
+
+$$\mu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \\ \| \mathfrak { u } \| & = \sqrt { 2 ^ { 2 } + 3 ^ { 2 } + 2 ^ { 2 } + ( - 1 ) ^ { 2 } } = \sqrt { 1 8 }, \\ \| \mathfrak { v } \| & = \sqrt { 4 ^ { 2 } + 2 ^ { 2 } + 1 ^ { 2 } + 3 ^ { 2 } } = \sqrt { 3 0 }. \\ \text{entre} \, \log \, \text{nintos} \, \varphi _ { 0 } \, \left ( 2 \right ) \, 2 \right ) - 1 \right \rangle \, \nu _ { 0 } \left ( 4 \right ) \, 2 \right ) \, 2 \right \rangle e x \, \log$$
+
+La distancia entre los puntos (2, 3, 2, -1) y (4, 2, 1, 3) es la longitud del vector u -v . De esta manera, según la ecuación (2),
+
+$$\begin{array} {$$
+
+Observe que en R 3 , las ecuaciones (1) y (2) para la longitud de un vector y la distancia entre dos puntos, respectivamente, no tienen que darse como definición; se pueden deducir con facilidad con dos aplicaciones del teorema de Pitágoras (ejercicio T.3).
+
+Definiremos el coseno del ángulo entre dos vectores en R n , generalizando la fórmula correspondiente en R 2 . Sin embargo, primero debemos recordar el concepto de producto punto en R n , definido en la primera parte de la sección 1.3.
+
+Si u = ( u 1 , u 2 , . . . , un ) y v = ( v 1 , v 2 , . . . , v n ) son vectores en R n , su producto punto se define como
+
+$$\mathbf u \cdot \mathbf v = u _ { 1 } \upsilon _ {$$
+
+Ésta es exactamente la forma en que se definió el producto punto en R 2 . El producto punto en R n también se llama producto interior estándar (o canónico ).
+
+Si u y v son como en el ejemplo 7, entonces,
+
+$$u \cdot v = ( 2 ) ( 4 ) + ( 3 ) ( 2 ) + ( 2 ) ( 1 ) + ( - 1 ) ( 3 ) = 1 3.$$
+
+(Aplicación: control de ingresos) Consideremos la tienda del ejemplo 5. Si el vector p denota el precio de cada uno de los 100 artículos, el producto punto
+
+## v · p
+
+proporciona el total de ingresos recibidos al final de la semana.
+
+■
+
+Si u es un vector en R n , podemos utilizar la definición de producto punto en R n para escribir
+
+El producto punto en R n satisface las mismas propiedades que en R 2 . Estableceremos estas propiedades en el siguiente teorema, análogo al teorema 4.1.
+
+$$\| u \| = \sqrt { u } \cdot u. \\ \mathfrak { a m i c m a c r o n i e }.$$## TEOREMA 4.3
+
+Demostración
+
+## TEOREMA 4.4
+
+Demostración
+
+Figura 4.34 ▲
+
+<!-- image -->
+
+(Propiedades del producto punto) Si u v , y w son vectores en R n y c es un escalar, entonces:
+
+(a) u · u /g42 0; u · u = 0 si y sólo si u = 0
+
+(b) u · v = v · u
+
+(c) ( u + v ) · w = u · w + v · w
+
+$$( d ) \ ( c \mathbf u ) \cdot \mathbf v = \mathbf u \cdot ( c \$$
+
+Ejercicio T.4.
+
+■
+
+Ahora demostraremos un resultado que nos permitirá dar una definición útil para el coseno del ángulo entre dos vectores no nulos. Este resultado, conocido como desigualdad de Cauchy * -Schwarz ** , tiene muchas aplicaciones importantes en matemáticas. Su demostración, aunque no es difícil, tampoco es muy natural, ya que comienza de una manera ingeniosa.
+
+(Desigualdad de Cauchy-Schwarz) Si u y v son vectores en R n , entonces
+
+$$| u \cdot v | \leq \| u \| \| v \|. \quad \quad \quad$$
+
+( Observe que el símbolo | | representa el valor absoluto de un número real; el símbolo ‖ ‖ denota la longitud de un vector. )
+
+Si u = 0, entonces ‖ u ‖ = 0 y u · v = 0, de modo que se cumple (3). Ahora supongamos que u es distinto de cero. Sea r un escalar y consideremos el vector r u + v . De acuerdo con el teorema 4.3,
+
+$$0 \leq ( r \mathfrak { u } + \mathfrak { v } ) \cdot ( r \mathfrak { u } + \mathfrak { v } ) & = r ^ { 2 } \mathfrak { u } \cdot \mathfrak { u } + 2 r \mathfrak { u } \cdot \mathfrak { v } + \mathfrak { v } \cdot \mathfrak { v } \\ & = a r ^ { 2 } + 2 b r + c,$$
+
+donde
+
+$$a = u \cdot u, \quad b = u \cdot v \quad y \quad c = v \cdot v. \\ \mathbb { w } - \mathbb { w } ^ { 2 } + \mathbb { w } + \mathbb { w } \cdot \mathbb { w } \cdot \mathbb { w } \cdot \mathbb { w } \cdot \mathbb { w } \cdot \mathbb { w } \cdot \mathbb { w } \cdot \mathbb { w } \cdot \mathbb { w } \cdot \mathbb { w } \cdot \mathbb { w } \cdot \mathbb { w } \cdot \mathbb { w } \cdot \mathbb { w } \cdot \mathbb { w } \cdot \mathbb { w } \cdot \mathbb { w } \cdot \mathbb { w } \cdot \mathbb { w } \cdot \mathbb { w } \cdot \mathbb { w } \cdot \mathbb { w } \cdot \mathbb { w } \cdot \matrix \mathbb { w } \cdot \mathbb { w } \cdot \mathbb { w } \cdot \mathbb { w } \cdot \mathbb { w } \cdot \mathbb { w } \cdot \mathbb { w } \cdot \mathbb { w } \cdot \mathbb { w } \cdot \mathbb { w } \cdot \mathbb { w } \cdot \mathbb { w } \cdot \mathbb { w } \cdot \mathbb { w } \cdot \mathbb { w } \cdot \mathbb { w } \cdot \mathbb { w } \cdot \mathbb { w } \cdot \mathbb { w } \cdot \mathbb { w } \cdot \mathbb { w } \cdot \mathbb { w } \cdot \text{$\mathbb{w}$} \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb{ w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb \ w \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w} \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { W } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { W w \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { W W \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb {w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb {w} \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb {w w \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { u } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { u \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w } \quad \mathbb { w. }$$
+
+Ahora, p r ( ) = ar 2 + 2 br + c es un polinomio cuadrático en r (cuya gráfica es una parábola que abre hacia arriba, pues a &gt; 0) que es no negativo para todos los valores de  . r Esto significa que el polinomio no tiene raíces reales, o si las tiene, son iguales. [Si p r ( ) tuviera dos raíces distintas r 1 y r 2 , sería negativo para algún valor de r entre r 1 y r 2 , como se ve en la figura 4.34.]
+
+Recordemos que las raíces de p r ( ) están dadas por la fórmula cuadrática como
+
+$$\text{ordemos que las r aices de p(r) estan dadas por la formula cuadrut.} \\ \frac { - 2 b + \sqrt { 4 b ^ { 2 } - 4 a c } } { 2 a } \quad y \quad \frac { - 2 b - \sqrt { 4 b ^ { 2 } - 4 a c } } { 2 a }$$
+
+Cauchy escribió siete libros y más de 700 artículos de calidad variable, cuyo contenido abarcaba todas las ramas de las matemáticas. Realizó importantes contribuciones a la naciente teoría de los determinantes, a la teoría de los valores propios, al estudio de las ecuaciones diferenciales ordinarias y parciales, a la teoría de los grupos de permutaciones y a los fundamentos del cálculo; además, fundó la teoría de funciones de variable compleja. **Karl Hermann Amandus Schwarz (1843-1921) nació en Polonia, pero fue educado en Alemania, donde además trabajó como maestro. Fue protegido de Karl Weierstrass y Ernst Eduard Kummer, con cuya hija contrajo nupcias. Sus principales contribuciones a las matemáticas se dieron en los aspectos geométricos del análisis,  como  las  transformaciones  conformes  y  las  superficies  mínimas.  En  relación  con  lo  anterior,  buscó ciertos números asociados con las ecuaciones diferenciales, mismos que desde entonces se han llamado valores propios. La desigualdad anterior se utilizó en la búsqueda de estos números.## Observación
+
+## EJEMPLO 10
+
+## EJEMPLO 11
+
+( a /HS11005 0 pues u /HS11005 0 ). Ambas raíces son iguales o no existen raíces reales si
+
+$$4 b ^ { 2 } - 4 a c \leq 0,$$
+
+lo cual significa que
+
+$$b ^ { 2 } \leq 4 a c.$$
+
+Al sacar las raíces cuadradas de ambos lados y observar que , , obtenemos (3). ■ √ c = √ v · v v u √ a = √ u · u =
+
+El resultado conocido ampliamente como la desigualdad de Cauchy-Schwarz (teorema 4.4) proporciona un buen ejemplo de cómo los sentimientos nacionalistas desempeñan un papel importante en la ciencia. Por lo general, en Rusia este resultado se conoce como desigualdad de Bunyakovsky . En Francia suele hacerse referencia a él como * desigualdad  de  Cauchy ,  y  en  Alemania  se  cita  frecuentemente  como desigualdad  de Schwarz . En un intento por distribuir el crédito del resultado entre los tres, una minoría de autores se refiere a él como desigualdad CBS .
+
+Si u y v son como en el ejemplo 7, de acuerdo con el ejemplo 8, u · v = 13. Por lo tanto,
+
+$$\Delta ^ { 1 8 } \surd 3 0. \quad \Delta ^ { 1 8 }$$
+
+$$\text{$an el $\jmath$emplo $/$, de acuerdo con el $\jmath$emplo $8,\i$} \\ \text{$|\mathfrak u\cdot\mathfrak v| = 13 \leq \| \mathfrak u\| \| \mathfrak v\| = \sqrt { 1 8 } \sqrt { 3 0 }.} \\ \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot \cdot$$
+
+Utilizaremos la desigualdad de Cauchy-Schwarz para definir el ángulo entre dos vectores distintos de cero en R n .
+
+Si u y v son vectores distintos de cero, la desigualdad de Cauchy-Schwarz implica que
+
+$$\left | \frac { u \cdot v } { \| u \| \| v \| } \right | \leq 1$$
+
+o
+
+$$- 1 \leq \frac { u \cdot v } { \| u \| \| v \| } \leq 1.$$
+
+Al examinar la parte de la gráfica de y = cos θ (vea la figura 4.35) para 0 ≤ θ ≤ π , vemos que para cualquier número r en el intervalo [ -1, 1], existe un único número real θ tal que cos θ = r . Esto implica que hay un único número real θ tal que
+
+$$\mu _ { \quad } \mu _ { \quad } \mu _ { \quad } \mu _ { \quad } \mu _ { \quad } \mu _ { \quad } \mu _ { \quad } \mu _ { \quad } \mu _ { \quad } \mu _ { \quad } \mu _ { \quad } \mu _ { \quad } \mu _ { \quad } \mu _ { \quad } \mu _ { \quad } \mu _ { \quad } \mu _ { \quad } \mu _ { \quad } \mu _ { \quad } \mu _ { \quad } \mu _ { \quad } \mu _ { \quad } \mu _ { \quad } \mu _ { \quad } \mu _ { \quad } \mu _ { \quad } \mu _ { \quad } \mu _ { \quad } \mu _ { \quad } \mu _ {\quad } \mu _ { \quad } \mu _ { \quad } \mu _ { \quad } \mu _ { \quad } \mu _ { \quad } \mu _ { \quad } \mu _ { \quad } \mu _ { \quad } \mu _ { \quad } \mu _ { \quad } \mu _ { \quad } \mu _ { \quad } \mu _ { \quad } \mu _ { \quad } \mu _ { \quad } \mu _ { \quad } \mu _ { \quad } \mu _ { \quad } \mu _ { \quad } \mu _ { \quad } \mu _ { \quad } \mu _ { \quad } \mu _ { \quad } \mu _ { \quad } \mu _ { \quad } \mu _ { \quad } \mu _ { \quad } \mu _ { \quad } \nu _ { \quad } \nu _ { \quad } \nu _ { \quad } \nu _ { \quad } \nu _ { \quad } \nu _ { \quad } \nu _ { \quad } \nu _ { \quad } \nu _ { \quad } \nu _ { \quad } \nu _ { \quad } \nu _ { \quad } \nu _ { \quad } \nu _ { \quad } \nu _ { \quad } \nu _ { \quad } \nu _ { \quad } \nu _ { \quad } \nu _ { \quad } \nu _ { \quad } \nu _ { \quad } \nu _ { \quad } \nu _ { \quad } \nu _ { \quad } \nu _ { \quad } \nu _ { \quad } \nu _ { \quad } \nu _ { \quad } \nu _ { \ \quad } \nu _ { \quad } \nu _ { \quad } \nu _ { \quad } \nu _ { \quad } \nu _ { \quad } \nu _ { \quad } \nu _ { \quad } \nu _ { \quad } \nu _ { \quad } \nu _ { \quad } \nu _ { \quad } \nu _ { \quad } \nu _ { \quad } \nu _ { \quad } \nu _ { \quad } \nu _ { \quad } \nu _ { \quad } \nu _ { \quad } \nu _ { \quad } \nu _ { \quad } \nu _ { \quad } \nu _ { \quad } \nu _ { \quad } \nu _ { \quad } \nu _ { \quad } \nu _ { \quad } \nu _ { \quad } \nu _ { \quad } \\ \cos \theta = \frac { u \cdot u } { \| u \cdot u \| \| \| \nu \| }, \quad \ 0 \leq \theta \leq \pi.$$
+
+El ángulo θ es el ángulo entre u y v .
+
+En el caso de R 3 , podemos aplicar la ley de los cosenos para establecer que el coseno del ángulo entre u y v está dado por (4). Sin embargo, para R n , n &gt; 3, tenemos que definirlo como (4).
+
+$$\begin{array} { c } \text{to 11} & \text{Sean u} = ( 1, 0, 0, 1 ) \, y \, \text{v} = ( 0, 1, 0, 1 ). \, \text{Entonces} \\ & \| \text{u} \| = \sqrt { 2 }, \quad \| \text{v} \| = \sqrt { 2 } \quad y \quad \text{u} \cdot \text{v} = 1. \\ & \text{Fn consecutive} \\ \end{array}$$
+
+En consecuencia,
+
+$$y \, \theta = 6 0 ^ { \circ } \, o \, \frac { \pi } { 3 } \, r a$$
+
+$$\cos \theta = \frac { 1 } { 2 }$$
+
+$$\stackrel { y \, \theta = 6 0 ^ { \circ } \, o \, \frac { \pi } { 3 } \, \text{radians.} } { \stackrel { y \, \theta = 6 0 ^ { \circ } \, o \, \frac { \pi } { 3 } } { \text{radians.} } }$$## Figura 4.35 ▶
+
+<!-- image -->
+
+Es muy útil hablar de ortogonalidad y paralelismo en R n , por ello formularemos a continuación las siguientes definiciones.
+
+## DEFINICIÓN
+
+## EJEMPLO 12
+
+## TEOREMA 4.5
+
+Demostración
+
+Figura 4.36 ▲
+
+<!-- image -->
+
+Desigualdad del triángulo
+
+Dos vectores distintos de cero, u y v , en R n , son ortogonales si u · v = 0. Si uno de los vectores es el vector cero, diremos que los vectores son ortogonales. Decimos que son paralelos si | u · v | = ‖ u ‖‖ ‖ v . Tienen la misma dirección si u · v =‖ ‖‖ ‖ u v . Es decir, son ortogonales si cos θ = 0, paralelos si cos θ = ± 1, y tienen la misma dirección si cos θ = 1.
+
+Considere los vectores u = (1, 0, 0, 1), v = (0, 1, 1, 0) y w = (3, 0, 0, 3). Entonces
+
+$$u \cdot \mathbf v = 0 \quad y \quad \mathbf v \cdot \mathbf w = 0,$$
+
+lo cual implica que tanto u y v como v y w son ortogonales. Tenemos
+
+$$\mu _ { 0 } \quad \mu _ { 0 } \quad \mu _ { 0 } \quad \mu _ { 0 } \quad \mu _ { 0 } \quad \mu _ { 0 } \quad \mu _ { 0 } \quad \mu _ { 0 } \quad \mu _ { 0 } \quad \mu _ { 0 } \quad \mu _ { 0 } \quad \mu _ { 0 } \quad \mu _ { 0 } \quad \mu _ { 0 } \quad \mu _ { 0 } \quad \mu _ { 0 } \quad \mu _ { 0 } \quad \mu _ { 0 } \quad \mu _ { 0 } \quad \mu _ { 0 } \quad \mu _ { 0 } \quad \mu _ { 0 } \quad \mu _ { 0 } \quad \mu _ { 0 } \quad \mu _ { 0 } \quad \mu _ { 0 } \quad\mu _ { 0 } \quad \mu _ { 0 } \quad \mu _ { 0 } \quad \mu _ { 0 } \quad \mu _ { 0 } \quad \mu _ { 0 } \quad \mu _ { 0 } \quad \mu _ { 0 } \quad \mu _ { 0 } \quad \mu _ { 0 } \quad \mu _ { 0 } \quad \mu _ { 0 } \quad \mu _ { 0 } \quad \mu _ { 0 } \quad \mu _ { 0 } \quad \mu _ { 0 } \quad \mu _ { 0 } \quad \mu _ { 0 } \quad \mu _ { 0 } \quad \mu _ { 0 } \quad \mu _ { 0 } \quad \mu _ { 0 } \quad \mu _ { 0 } \quad \mu _ { 0 } \quad \mu _ { 0 } \ \mu _ { 0 } \quad \mu _ { 0 } \quad \mu _ { 0 } \quad \mu _ { 0 } \quad \mu _ { 0 } \quad \mu _ { 0 } \quad \mu _ { 0 } \quad \mu _ { 0 } \quad \mu _ { 0 } \quad \mu _ { 0 } \quad \mu _ { 0 } \quad \mu _ { 0 } \quad \mu _ { 0 } \quad \mu _ { 0 } \quad \mu _ { 0 } \quad \mu _ { 0 } \quad \mu _ { 0 } \quad \mu _ { 0 } \quad \mu _ { 0 } \quad \mu _ { 0 } \quad \mu _ { 0 } \quad \mu _ { 0 } \quad \mu _ { 0 } \quad \mu _ { 0 } \quad \mu _ { 0 } \ \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \ \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu ^ { \prime } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 1 } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 0 } \quad \nu _ { 2 } \quad \nu _ { 1 } \quad \nu _ { 1 } \quad \nu _ { 2 } \quad \nu _ { 2 } \quad \nu _ { 3 } \quad \nu _ { 4 } \quad \nu _ { 5 } \quad \nu _ { 6 } \quad \nu _ { 7 } \quad \nu _ { 8 } \quad \nu _ { 9 } \quad \nu _ { 1 } \quad \nu _ { 2 } \quad \nu _ { 3 } \quad \nu _ { 4 } \quad \nu _ { 5 } \quad \nu _ { 6 } \quad \nu _ { 7 } \quad \nu _ { 8 } \quad \nu _ { 9 } \quad \nu _ { 2 } \quad \nu _ { 3 } \quad \nu _ { 4 } \quad \nu _ { 5 } \quad \nu _ { 6 } \quad \nu _ { 8 } \quad \nu _ { 9 } \quad \nu _ { 2 } \quad \nu _ { 3 } \quad \nu _ { 3 } \quad \nu _ { 4 } \quad \nu _ { 5 } \quad \nu _ { 6 } \quad \nu _ { 7 } \quad \nu _ { 9 } \quad \nu _ { 2 } \quad \nu _ { 3 } \quad \nu _ { 4 } \quad \nu _ { 5 } \quad \nu _ { 6 } \quad \nu _ { 7 } \quad \nu _ { 8 } \quad \nu _ { 9 } \quad \nu _ { 2 } \quad \nu _ { 3 } \quad \nu _ { 4 } \quad \nu _ { 5 } \quad \nu _ { 6 } \quad \nu _ { 7 } \quad \nu _ { 8 } \quad \nu _ { 9 } \quad \nu _ { 2 } \quad \nu _ { 3 } \quad \nu _ { 4 } \quad \nu _ { 5 } \quad \nu _ { 6 } \quad \nu _ { 7 } \quad \nu _ { 8 } \quad \nu _ { 9 } \quad \nu _ { 2 } \quad \nu _ { 3 } \quad \nu _ { 4 } \quad \nu _ { 5 } \quad \nu _ { 6 } \quad \nu _ { 7 } \quad \nu _ { 9 } \quad \nu _ { 2 } \quad \nu _ { 3 } \quad \nu _ { 4 } \quad \nu _ { 5 } \quad \nu _ { 6 } \quad \nu _ { 7 } \quad \nu _ { 8 } \quad \nu _ { 9 } \quad \nu _ { 2 } \quad \nu _ { 3 } \quad \nu _ { 4 } \quad \nu _ { 5 } \quad \nu _ { 6 } \quad \nu _ { 7 } \quad \nu _ { 8 } \quad \nu _ { 9 } \quad \nu _ { 2 } \quad \nu _ { 3 } \quad \nu _ { 3 } \quad \nu _ { 4 } \quad \nu _ { 5 } \quad \nu _ { 6 } \quad \nu _ { 7 } \quad \nu _ { 8 } \quad \nu _ { 9 } \quad \nu _ { 2 } \quad \nu _ { 3 } \quad \nu _ { 4 } \quad \nu _ { 5 } \quad \nu _ { 6 } \quad \nu _ { 7 } \quad \nu _ { 8 } \quad \nu _ { 9 } \quad \nu _ { 2 } \quad \nu _ { 3 } \quad \nu _ { 4 } \quad \nu _ { 5 } \quad \nu _ { 6 } \quad \nu _ { 7 } \quad \nu _ { 8 } \quad \nu _ { 9 } \quad \nu _ { 2 } \quad \nu _ { 4 } \quad \nu _ { 5 } \quad \nu _ { 6 } \quad \nu _ { 7 } \quad \nu _ { 2 } \quad \nu _ { 3 } \quad \nu _ { 4 } \quad \nu _ { 5 } \quad \nu _ { 6 } \quad \nu _ { 7 } \quad \nu _ { 8 } \quad \nu _ { 9 } \quad \nu _ { 2 } \quad \nu _ { 3 } \quad \nu _ { 4 } \quad \nu _ { 5 } \quad \nu _ { 6 } \quad \nu _ { 7 } \quad \nu _ { 8 } \quad \nu _ { 9 } \quad \nu _ { 2 } \quad \nu _ { 3 } \quad \nu _ { 4 } \quad \nu _ { 5 } \quad \nu _ { 6 } \quad \nu _ { 7 } \quad \nu _ { 8 } \quad \nu _ { 9 } \quad \nu _ { 4 } \quad \nu _ { 5 } \quad \nu _ { 6 } \quad \nu _ { 7 } \quad \nu _ { 8 } \quad \nu _ { 9 } \quad \nu _ { 2 } \quad \nu _ { 4 } \quad \nu _ { 5 } \quad \nu _ { 6 } \quad \nu _ { 7 } \quad \nu _ { 8 } \quad \nu _ { 9 } \quad \nu _ { 2 } \quad \nu _ { 4 } \quad \nu _ { 5 } \quad \nu _ { 6 } \quad \nu _ { 7 } \quad \nu _ { 8 } \quad \nu _ { 9 } \quad \nu _ { 2 } \quad \nu _ { 4 } \quad \nu _ { 4 } \quad \nu _ { 5 } \quad \nu _ { 6 } \quad \nu _ { 7 } \quad \nu _ { 4 } \quad \nu _ { 4 } \quad \nu _ { 5 } \quad \nu _ { 6 } \quad \nu _ { 7 } \quad \nu _ { 8 } \quad \nu _ { 9 } \quad \nu _ { 2 } \quad \nu _ { 4 } \quad \nu _ { 4 } \quad \nu _ { 5 } \quad \nu _ { 6 } \quad \nu _ { 7 } \quad \nu _ { 8 } \quad \nu _ { 9 } \quad \nu _ { 2 } \quad \nu _ { 4 } \quad \nu _ { 4 } \quad \nu _ { 5 } \quad \nu _ { 6 } \quad \nu _ { 7 } \quad \nu _ { 4 } \quad \nu _ { 4 } \quad \nu _ { 5 } \quad \nu _ { 6 } \quad \nu _ { 7 } \quad \nu _ { 8 } \quad \nu _ { 9 } \quad \nu _ { 2 } \quad \nu _ { 4 } \quad \nu _ { 4 } \quad \nu _ { 5 } \quad \nu _ { 6 } \quad \nu _ { 6 } \quad \nu _ { 7 } \quad \nu _ { 4 } \quad \nu _ { 4 } \quad \nu _ { 4 } \quad \nu _ { 5 } \quad \nu _ { 6 } \quad \nu _ { 7 } \quad \nu _ { 4 } \quad \nu _ { 4 } \quad \nu _ { 4 } \quad \nu _ { 5 } \quad \nu _ { 6 } \quad \nu _ { 7 } \quad \nu _ { 4 } \quad \nu _ { 4 } \quad \nu _ { 5 } \quad \nu _ { 6 } \quad \nu _ { 7 } \quad \nu _ { 4 } \quad \nu _ { 4 } \quad \nu _ { 5 } \quad \nu _ { 6 } \quad \nu _ { 7 } \quad \nu _ { 4 } \quad \nu _ { 4 } \quad \nu _ { 5 } \quad \nu _ { 6 } \quad \nu _ { 7 } \quad \nu _ { 4 } \quad \nu _ { 4 } \quad \nu _ { 5 } \quad \nu _ { 6 } \quad \nu _ { 7 } \quad \nu _ { 4 } \quad \nu _ { 4 } \quad \nu _ { 4 } \quad \nu _ { 4 } \quad \nu _ { 5 } \quad \nu _ { 6 } \quad \nu _ { 7 } \quad \nu _ { 4 } \quad \nu _ { 5 } \quad \nu _ { 6 } \quad \nu _ { 7 } \quad \nu _ { 4 } \quad \nu _ { 4 } \quad \nu _ { 5 } \quad \nu _ { 6 } \quad \nu _ { 7 } \quad \nu _ { 4 } \quad \nu _ { 4 } \quad \nu _ { 5 } \quad \nu _ { 6 } \quad \nu _ { 7 } \quad \nu _ { 4 } \quad \nu _ { 4 } \quad \nu _ { 4 } \quad \nu _ { 5 } \quad \nu _ { 6 } \quad \nu _ { 7 } \quad \nu _ { 4 } \quad \nu _ { 4 } \quad \nu _ { 4 } \quad \nu _ { 4 } \quad \nu _ { 4 } \quad \nu _ { 4 } \quad \nu _ { 4 } \quad \nu _ { 4 } \quad \nu _ { 4 } \quad \nu _ { 4 } \quad \nu _ { 4 } \quad \nu _ { 4 } \quad \nu _ { 4 } \quad \nu _ { 4 } \quad \nu _ { 4 } \quad \nu _ { 4 } \quad \nu _ { 4 } \quad \nu _ { 4 } \quad \nu _ { 4 } \quad \nu _ { 4 } \quad \nu _ { 4 } \quad \nu _ { 4 } \quad \nu _ { 4 } \quad \nu _ { 4 } \quad \nu _ { 4 } \quad \nu _ { 5 } \quad \nu _ { 4 } \quad \nu _ { 4 } \quad \nu _ { 4 } \quad \nu _ { 4 } \quad \nu _ { 4 } \quad \nu _ { 4 } \quad \nu _ { 4 } \quad \nu _ { 4 } \quad \nu _ { 4 } \quad \nu _ { 4 } \quad \nu _ { 4 } \quad \nu _ { 4 } \quad \nu _ { 4 } \quad \nu _ { 4 } \quad \nu _ { 4 } \quad \nu _$$
+
+y el coseno del ángulo entre u y w es 1 (verifique). En consecuencia, concluimos que u y w tienen la misma dirección. ■
+
+Una  consecuencia  de  la  desigualdad  de  Cauchy-Schwarz  es  la  desigualdad  del triángulo, que demostramos a continuación.
+
+(Desigualdad del triángulo) Si u y v son vectores en R n , entonces
+
+$$\| u + v \| \leq \| u \| + \| v \|.$$
+
+De acuerdo con la definición de la longitud de un vector, tenemos
+
+$$\| u + \mathbf v \| ^ { 2 } & = ( \mathbf u + \mathbf v ) \cdot ( \mathbf u + \mathbf v ) \\ & = u \cdot \mathbf u + 2 ( \mathbf u \cdot \mathbf v ) + \mathbf v \cdot \mathbf v \\ & = \| \mathbf u \| ^ { 2 } + 2 ( \mathbf u \cdot \mathbf v ) + \| \mathbf v \| ^ { 2 }. \\ \mathbf a \, C \text{s.k. c.h. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch. mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.m. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mm. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mm. } \text{ch.mm. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mm. } \text{ch.mp. } \text{ch.mm. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.pm. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.pm. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.pm. } \text{ch.pm. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mm. } \text{ch.pm. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mm. } \text{ch.mp. } \text{ch.pm. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mm. } \text{ch.mm. } \text{ch.pm. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mm. } \text{ch.mp. } \text{ch.mp. } \text{ch.mm. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mm. } \text{ch.mp. } \text{ch.mp. } \text{ch.pm. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mm. } \text{ch.mp. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mp. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mm. } \text{ch.mp. } \text{ch.mp. } \text{ch.mm. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text{ch.mp. } \text$$
+
+Según la desigualdad de Cauchy-Schwarz, tenemos
+
+$$\| \mathfrak { u } \| ^ { 2 } + 2 ( \mathfrak { u } \cdot \mathfrak { v } ) + \| \mathfrak { v } \| ^ { 2 } & \leq \| \mathfrak { u } \| ^ { 2 } + 2 \| \mathfrak { u } \| \| \mathfrak { v } \| + \| \mathfrak { v } \| ^ { 2 } \\ & = ( \| \mathfrak { u } \| + \| \mathfrak { v } \| ) ^ { 2 }. \\ \,. \quad \dots \, \dots \, \dots \, \dots \,. \quad \dots \,.$$
+
+Obtenemos el resultado deseado al calcular las raíces cuadradas.
+
+■
+
+La desigualdad del triángulo en R 2 y R 3 simplemente establece que la longitud de un lado de un triángulo no excede la suma de las longitudes de los otros dos lados (figura 4.36).## EJEMPLO 13
+
+## DEFINICIÓN
+
+## EJEMPLO 14
+
+Para u y v como en el ejemplo 12, tenemos
+
+$$\begin{array} { c } \cdot \dots \dots \dots \dots \dots \dots \dots \dots \\ \| u + \mathbf v \| = \sqrt { 4 } = 2 < \sqrt { 2 } + \sqrt { 2 } = \| \mathbf u \| + \| \mathbf v \|. \end{array} \begin{array} { c } \Delta \\ \Delta \\ \cdot \dots \dots \dots \dots \dots \dots \dots \dots \dots \dots \dots \dots \dots \dots \dots \dots \dots \dots \dots \dots \dots \dots \dots \dots \dots \dots \dots \dots \dots \dots \dots \dots \dots \dots \dots \dots \dots \dots \dots \dots \dots \dots \dots \dots \dots \dots \dots \dots \dots \dots \dots \dots \dots \dots \dots \dots \dots \dots \dots \dots \dots \dots \dots \dots \dots \dots \dots \end{array} \end{array}$$
+
+Otro resultado útil es el teorema de Pitágoras en R n : si u y v son vectores en R n , entonces
+
+$$\| \mathfrak { u } + \mathfrak { v } \| ^ { 2 } = \| \mathfrak { u } \| ^ { 2 } + \| \mathfrak { v } \| ^ { 2 }$$
+
+si y sólo si u y v son ortogonales (ejercicio T.10).
+
+Un vector unitario u en R n es un vector con longitud 1. Si x es un vector distinto de cero, entonces el vector
+
+$$u = \frac { 1 } { \| \mathbf x \| } \, \mathbf x$$
+
+es un vector unitario en dirección x .
+
+Si x = (1, 0, 0, 1), como ‖ x ‖ = , el vector es un vector unitario en dirección x . ■ u = √ 1 2 (1, 0, 0, 1) √ 2
+
+En el caso de R 3 , los vectores unitarios en las direcciones positivas de los ejes x , y y z se denotan como i = (1, 0, 0), j = (0, 1, 0) y k = (0, 0, 1), como se muestra en la figura 4.37. Si u = ( x 1 , y 1 , z 1 ) es cualquier vector en R 3 , podemos escribir u en términos de  , i j y k , como
+
+$$u = x _ { 1 } i + y _ { 1 } j + z _ { 1 } k.$$
+
+## Figura 4.37 ▶
+
+Vectores unitarios en R 3
+
+## EJEMPLO 15
+
+<!-- image -->
+
+Si u = (2, -1, 3), u = 2 i -j + 3 k . ■
+
+Los n -vectores
+
+$$\mathfrak { e } _ { 1 } = ( 1, 0, \dots, 0 ), \mathfrak { e } _ { 2 } = ( 0, 1, \dots, 0 ), \dots, \mathfrak { e } _ { n } = ( 0, 0, \dots, 1 ) \\ \cdots \cdots \quad \stackrel { \sim } { \sim } ^ { n } \cdots \cdots \cdots \cdots \cdots \cdots \cdots \cdots \cdots \cdots \cdots \cdots \cdots \cdots \cdots \cdots \cdots \cdots \cdots \cdots \cdots \cdots \cdots \cdots \cdots \cdots \cdots \cdots \cdots \cdots \cdots \cdots \cdots \cdots \cdots \cdots \cdots \cdots \cdots \cdots \cdots \cdots \cdots \cdots \cdots \cdots \cdots \cdots \cdots \cdots \cdots \cdots \cdots \cdots \cdots \cdots \cdots \cdots \cdots \cdots \cdots \cdots \cdots \cdots \cdots \cdots \cdots \end{$$
+
+son vectores unitarios en R n , que son mutuamente ortogonales. Si u = ( u 1 , u 2 , . . . , un ) es  cualquier  vector  en R n , u se  puede  escribir  como  una  combinación  lineal  de e 1 , e 2 , . . . , e n , como
+
+$$u = u _ { 1 } \mathbf e _ { 1 } + u _ { 2 } \mathbf e _ { 2 } + \cdots + u _ { n } \mathbf e _ { n }. \\. \. \. \quad. \quad. \quad. \cdots \cdots \cdots.$$
+
+El vector e i , 1 ≤ ≤ i n se puede ver como la  -ésima columna de la matriz identii dad I n . Así, observamos que las columnas de I n forman un conjunto de n vectores que son ortogonales entre sí. En la sección 6.8 analizaremos tales conjuntos de vectores con más detalle.<!-- image -->
+
+La sección 5.1, Producto cruz en R 3 , y la sección 5.2, Rectas y planos, utilizan el material de esta sección, así que pueden estudiarse en este momento.
+
+## n -VECTORES BINARIOS (OPCIONAL)
+
+En la sección 1.2 definimos un n -vector binario como una matriz de 1 × n o de n × 1 en la que todas las entradas son 0 o 1. Sea B n el conjunto de todos los n -vectores binarios. Las operaciones vectoriales de suma y multiplicación por un escalar son válidas para los vectores en B n , siempre y cuando utilicemos aritmética binaria. Además, puede verificarse el teorema 4.2 para B n , en donde sólo se permiten los escalares 0 y 1. Asimismo, el producto punto de n -vectores binarios está bien definido, como se ilustró en la sección 1.3.
+
+En esta sección se presentó un modelo visual para R 3 . Existe un modelo similar, pero más restringido, para B 3 . El cubo unitario, que se muestra en la figura 4.38, constituye una ilustración de los vectores en B 3 . Las coordenadas de los vértices del cubo corresponden al conjunto de 3-vectores binarios. (Vea el ejercicio T.10 de la sección 1.2.) Estos vectores pueden representarse de manera geométrica como segmentos de recta dirigidos que inician en el origen y terminan en un vértice del cubo. Los vectores distintos de cero de B 3 se muestran en la figura 4.39. Observe que B 3 tiene un número finito de vectores, mientras que R 3 tiene una infinidad de ellos.
+
+Figura 4.38 ▲
+
+<!-- image -->
+
+<!-- image -->## EJEMPLO 16
+
+Desafortunadamente no existe una convención geométrica análoga para las operaciones con 3-vectores binarios que corresponda a la construcción que se muestra en las figuras 4.32 y 4.33 para R 3 .
+
+No todas las propiedades del producto punto, enumeradas en el teorema 4.3, son válidas para B n . Vea el ejemplo 16.
+
+$$\mathfrak { A } _ { \ } \ \text{Sea} \, \mathfrak { u } = ( 1, \, 1, \, 0 ) \, \text{de} \, B ^ { 3 }. \, \text{Entonces}$$
+
+Por lo tanto, existe un vector no nulo en B tal que 0.
+
+$$u \cdot u = ( 1 ) ( 1 ) + ( 1 ) ( 1 ) + ( 0 ) ( 0 ) = 1 + 1 + 0 = 0. \\ \intertext { tanto, existe un vector no nulo en $^{3}$ tal que $\|u\| = \sqrt{\nol\cdot\bar{u}} = 0. }$$
+
+Esta deficiencia significa que el concepto de longitud de vectores, como se definió para R n ,  no se generaliza para vectores en B 3 .  De esto resulta que la desigualdad de Cauchy-Schwarz, ángulo entre vectores, vectores ortogonales y la desigualdad del triángulo, no son aplicables a B n . (Vea los ejercicios 38, 39, T.20 y T.21). Sin embargo, los n -vectores binarios
+
+$$\mathbf e _ { 1 } = ( 1, 0, \dots, 0 ), \mathbf e _ { 2 } = ( 0, 1, \dots, 0 ), \dots, \mathbf e _ { n } = ( 0, 0, \dots, 1 )$$
+
+pueden emplearse para expresar cualquier vector u en B n como
+
+$$\mathfrak { u } = u _ { 1 } \mathbf e _ { 1 } + u _ { 2 } \mathbf e _ { 2 } + \dots + u _ { n } \mathbf e _ { n } = \sum _ { j = 1 } ^ { n } u _ { j } \mathbf e _ { j }.$$

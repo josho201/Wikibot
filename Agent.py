@@ -1,20 +1,26 @@
 from datetime import datetime
-from openai import OpenAI # type: ignore
+import gradio as gr
+from openai import OpenAI
+from dotenv import dotenv_values 
+import re
+
+from wikibot.tts import kokoro_text_to_speech   
 from wikibot.utils import process_tool_calls
-import gradio as gr # type: ignore
 from wikibot.whisper import transcribe
-from dotenv import dotenv_values # type: ignore
+
 config = dotenv_values(".env")
 
 # Point to the local server
-client = OpenAI(api_key = config.get("OPENAI_API_KEY"))
-#client = OpenAI(base_url= "http://192.168.5.108:1234/v1", api_key="lm-studio")
+#client = OpenAI(api_key = config.get("OPENAI_API_KEY"))
+client = OpenAI(base_url = "https://dashscope-intl.aliyuncs.com/compatible-mode/v1",api_key = config.get("ALI_API_KEY"))
+#client = OpenAI(base_url= "http://172.28.224.1:1234/v1", api_key="lm-studio")
 #client = OpenAI(base_url="http://192.168.5.53:1234/v1", api_key="lm-studio")
 
 model = "deepseek-r1-distill-llama-8b"
 model = "gemma-3-12b-it"
 model = "qwen2.5-7b-instruct"
 model = "gpt-4o-mini"
+model = "qwen-max"
 tools = [
     { # fetch wikipedia content
         "type": "function",
@@ -92,7 +98,7 @@ tools = [
             "required": ["filename", "content", "extension"]
         }
     }
-},
+    },
     {
         "type": "function",
         "function": {
@@ -146,21 +152,21 @@ def clear_chat():
     global messages
     messages = [
         {
-    "role": "system",
-    "content": (
-        "You are a helpful assistant capable of performing the following tasks: "
-        "- Searching content on Google (fetch_google_content)"
-        #" and Wikipedia (fetch_wikipedia_content)."       
-        "- Fetching relevant information from websites using URLs (open_url). "
-        "- Saving files with specific extensions (save_file). "
-        "- Solving math problems (solve_equation). "
-        "You can use multiple tools simultaneously. "
-        "Do not hesitate to use these capabilities as much as possible to provide the best results. "
-        "After using a tool to generate a solution, prioritize presenting the result directly. "
-        "If the result is a mathematical answer or a factual statement, avoid unnecessary explanations or re-solving unless the user specifically asks for further steps or clarification. "
-        "You are bilingual in English and Spanish. "
-        f"The current date and time is: {current_date}"
-        )
+            "role": "system",
+            "content": (
+                "You are a helpful assistant capable of performing the following tasks: "
+                "- Searching content on Google (fetch_google_content)"
+                #" and Wikipedia (fetch_wikipedia_content)."       
+                "- Fetching relevant information from websites using URLs (open_url). "
+                "- Saving files with specific extensions (save_file). "
+                "- Solving math problems (solve_equation). "
+                "You can use multiple tools simultaneously. "
+                "Do not hesitate to use these capabilities as much as possible to provide the best results. "
+                "After using a tool to generate a solution, prioritize presenting the result directly. "
+                "If the result is a mathematical answer or a factual statement, avoid unnecessary explanations or re-solving unless the user specifically asks for further steps or clarification. "
+                "You are bilingual in English and Spanish. "
+                f"The current date and time is: {current_date}"
+                )
     }
 
     ]
@@ -272,22 +278,58 @@ def add_user_message(user_message, history):
     history.append({"role": "user", "content": user_message})
     return "", history
 
+
+
+message = ""
+
 def stream_response(history):
-    # Extract the last user message
-    user_message = history[-1]['content']
+
+    global message
+    inside_code_block = False
+    buffer = ""
+    latex_pattern = re.compile(r"\$\$(.*?)\$\$|\\\((.*?)\\\)|\\\[(.*?)\\\]")  # Remove LaTeX
     
-    # The assistant's response will be streamed from your chat() function.
-    # Initially, we add an empty assistant message to the history.
+    user_message = history[-1]['content']
+
     history.append({"role": "assistant", "content": ""})
     
-    # Stream the response and update the assistant message in history.
-    # Yield the full conversation after each update.
     for new_chunk in chat(user_message, history):
-        # Update the last assistant message with the new streaming chunk.
+        #print(new_chunk)
         history[-1]['content'] = new_chunk
         yield history
 
+        message += new_chunk
+
+        # print(message[-3:])    
+        if "```" in message[-3:]:
+            inside_code_block = not inside_code_block
+            continue
+        if not inside_code_block:
+            buffer += new_chunk
+            buffer = latex_pattern.sub("", buffer)  # Remove LaTeX
+           # buffer = code_pattern.sub("", buffer)  # Remove code blocks
+
+        #print(buffer)
+
+        while match := re.search(r"([.!?:])\s+", buffer):
+            sentence, buffer = buffer[:match.end()], buffer[match.end():]
+            print("whole sentence: ", sentence.strip())
+
+
+    if buffer.strip():
+        print("whole sentence", buffer.strip())
+
+transcription= ""
+
+def print_transcription(a,b):
+    print(transcription)
+
 def process_audio(audio, history):
+    global transcription
+    chunk = transcribe(audio)
+    transcription.join(chunk)
+    print(chunk, flush=True)
+    return
     speech_text = transcribe(audio)
 
     if speech_text.strip() == "":
@@ -302,33 +344,83 @@ css = """
 .col     {width: 20% !important}
 """
 
+def say_output(history):
+    return
+    last_chatbot_message = history[-1]['content'].replace("\n", "")
+    print(last_chatbot_message)
 
-with gr.Blocks(css = css) as demo:
+    audio = kokoro_text_to_speech(last_chatbot_message)   
+    a,b = next(audio) 
+    yield a,b
+
+with gr.Blocks(css = css) as demo:  
     chatbot = gr.Chatbot(
         type="messages", 
         latex_delimiters = latex_delimiters_set,
         show_copy_button = True,
-        editable = "all",
+        #editable = "all",
         scale = 0
         )
     with gr.Row():
-        audio = gr.Audio(sources=["microphone"], type="filepath")
-        msg = gr.Textbox(placeholder="Enter your message here")
+
+        audio = gr.Audio(
+            sources=["microphone"], 
+            type="filepath", 
+            
+            )
+        
+        msg = gr.Textbox(
+            placeholder="Enter your message here"
+            )
+        
         with gr.Column(elem_classes="col"):
-            submit = gr.Button("Submit",elem_classes="btn", elem_id="submit")
-            clear = gr.Button("Clear", elem_classes="btn")
+            submit = gr.Button(
+                "Submit",
+                elem_classes="btn", 
+                elem_id="submit"
+                )
+            
+            clear = gr.Button(
+                "Clear", 
+                elem_classes="btn"
+                )
+    
+    with gr.Row():
+        
+        stream_btn = gr.Button('Stream', variant='primary')
+        stop_btn = gr.Button('Stop', variant='stop')
+        
+        out_stream = gr.Audio(
+            label='Output Audio Stream', 
+            interactive=False, streaming=True, 
+            autoplay=True
+        )   
+
+        #stream_event = stream_btn.click(fn=generate_all, inputs=[text], outputs=[out_stream], api_name=None)
+        # stop_btn.click(fn=None, cancels=stream_event)
 
     
-
-    audio.stop_recording(process_audio, inputs=[audio, chatbot], outputs=[msg, chatbot])\
-        .then(stream_response, chatbot, chatbot, queue=True)
+    audio.stream(
+        process_audio, 
+        inputs=[audio, chatbot],
+        #stream_every=1.5
+        )
+    
+    audio.stop_recording(
+        print_transcription, 
+        inputs=[audio, chatbot],
+       
+        )
+    ##audio.stop_recording(process_audio, inputs=[audio, chatbot], outputs=[msg, chatbot])\
+      ##  .then(stream_response, chatbot, chatbot, queue=True)
     
     # When the user submits a message, first update the conversation history.
     submit.click(add_user_message, inputs=[msg, chatbot], outputs=[msg, chatbot], queue=False)\
-       .then(stream_response, chatbot, chatbot, queue=True)
+        .then(stream_response, chatbot, chatbot, queue=True)
+    #    .then(say_output,inputs=[chatbot], outputs=[out_stream], api_name=None)
     
     # Clear button resets the chatbot history.
-    clear.click(clear_chat   , None, chatbot, queue=False)
+    clear.click(clear_chat , None, chatbot, queue=False)
 
 if __name__ == "__main__":
-    demo.launch()
+    demo.launch(share=True)
