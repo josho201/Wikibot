@@ -1,0 +1,9 @@
+{
+    "testpdf/transformers.pdf": {
+        "checksum": "d87d482d5ae7960e2e43d7dd6d21377e60e73e8fce1bf2a01aff7aca8a08c537",
+        "processed_at": 1742508182.0050786,
+        "faiss_index_path": "procesado_tfns_faiss_index.bin",
+        "embeddings_path": "procesado_tfns_embeddings.npy",
+        "texts_path": "procesado_tfns_texts.json"
+    }
+}

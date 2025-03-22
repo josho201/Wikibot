@@ -1,95 +1,156 @@
-import torch
-from docling.datamodel.settings import settings
+from wikibot.rag.tools import WikiFile
+from openai import OpenAI
+import gradio as gr
+import dotenv
+# Load the OpenAI API key from an environment variable
+env = dotenv.dotenv_values()
+openai_api_key = env['OPENAI_API_KEY']
 
-"""
-    doc_batch_size: int = 2
-    doc_batch_concurrency: int = 2
-    page_batch_size: int = 4
-    page_batch_concurrency: int = 2
-    elements_batch_size: int = 16
-"""
+#init openai
+client = OpenAI(api_key= openai_api_key)
+model = "gpt-4o-mini"
+tools = [{
+            "type":"function",
+            "function":{
+                "name":"RAG Query",
+                "description":"Query the RAG model with a question and context",
+                "parameters":{
+                    "type": "object",
+                    "properties": {
+                        "question": {
+                            "type": "string",
+                            "description": "Keywords to include in the query"
+                        }
+                    }
+                }
+            }
+    }]
 
-settings.perf.code_formula_batch_size = 2
+#init wikifile
+doc = WikiFile("testpdf/transformers.pdf")
+doc.init()
 
-import os
-from PyPDF2 import PdfReader, PdfWriter
-import tempfile
-
-from docling.backend.docling_parse_v4_backend import DoclingParseV4DocumentBackend
-from docling.document_converter import DocumentConverter, PdfFormatOption
-from docling.datamodel.pipeline_options import PdfPipelineOptions, AcceleratorOptions, AcceleratorDevice
-from docling.datamodel.base_models import InputFormat
-import json
+messages = [{
+            "role": "system",
+            "content": 
+            "You are an expert in transformers. You can access the paper 'Attention is All You Need' to help answer questions."
+            "Via the RAG model, you can query the paper with keywords according to the users question."
+        }]
 
 
-accelerator_options = AcceleratorOptions(
-        num_threads=8, device=AcceleratorDevice.CUDA
-    )
+def process_RAG(tool_calls):
+    for tool_call in tool_calls.values():
+        if tool_call.function.name == "RAG Query":
+            question = tool_call.function.arguments["question"]
+            
+            content = doc.query(question)
+            return {
+                "role": "assistant",
+                "content": content
+            }    
 
-pipeline_options = PdfPipelineOptions()
-
-pipeline_options.accelerator_options = accelerator_options
-pipeline_options.do_formula_enrichment = True
-pipeline_options.code_formula_batch_size = 2
-converter = DocumentConverter(format_options={
-    InputFormat.PDF: PdfFormatOption(
-        pipeline_options=pipeline_options,
-        backend=DoclingParseV4DocumentBackend,
+def chat(user_input, history):
+   # global messages  # Ensure we persist conversation history
+    
+    # Append user message to conversation history
+    history.append({"role": "user", "content": user_input})
+    
+    try:
+        # Get initial response from model
+        stream = client.chat.completions.create(
+            model=model,
+            messages=history,  # Use the updated messages list
+            tools=tools,
+            stream=True
         )
-})
+        
+        final_tool_calls = {}
+        assistant_msgs = ""
+       
+        for chunk in stream:
+
+            # If tool calls are present, process them and continue the conversation
+            if chunk.choices[0].delta.tool_calls:
+
+                for tool_call in chunk.choices[0].delta.tool_calls or []:
+                    index = tool_call.index
+
+                    if index not in final_tool_calls:
+                        final_tool_calls[index] = tool_call
+                    else:
+                        final_tool_calls[index].function.arguments += tool_call.function.arguments
+
+            # If assistant response is present, append it to the assistant message
+            else:
+                if chunk.choices[0].delta.content is not None:
+                    assistant_msgs += chunk.choices[0].delta.content
+                    yield assistant_msgs
+
+                
+        tool_meta = ""          
+        # If tool calls are present, process them and continue the conversation
+       
+        if final_tool_calls:
+            assistant_tool_call_message = {
+                "role": "assistant",
+                "tool_calls": [
+                    {
+                        "id": final_tool_calls[key].id,
+                        "type": final_tool_calls[key].type,
+                        "function": {
+                            "arguments": final_tool_calls[key].function.arguments,
+                            "name": final_tool_calls[key].function.name,
+                        },
+                    }
+                    for key in final_tool_calls.keys()
+                ],
+            }
+
+            history.append(assistant_tool_call_message)
+                    
+            results = process_RAG(final_tool_calls, history)
+            
+            for result in results:
+                history.append(result)
+
+            # Get response from model after processing tool calls
+            stream = client.chat.completions.create(
+                model=model,
+                messages=messages,
+                stream=True
+            )
+            # Yield assistant messages
+            for chunk in stream:
+                if chunk.choices[0].delta.content is not None:
+                    assistant_msgs += chunk.choices[0].delta.content
+                    yield assistant_msgs
+
+    except Exception as e:
+        print(f"Error: {e}")
 
 
 
-def split_pdf_to_temp_files(pdf_path):
-    # Create a temporary directory
-    temp_dir = tempfile.mkdtemp()
-    print(f"Temporary directory created: {temp_dir}")
-    paths = []	
-    # Open the PDF file
-    with open(pdf_path, 'rb') as file:
-        # Read the PDF file
-        reader = PdfReader(file)
-        num_pages = len(reader.pages)
 
-        # Iterate through each page and save it as a separate PDF
-        for page_number in range(num_pages):
-            writer = PdfWriter()
-            writer.add_page(reader.pages[page_number])
+latex_delimiters_set = [
+        {"left": "$$", "right": "$$", "display": True},
+        {"left": "\\(", "right": "\\)", "display": False},
+        { "left": '\\[', "right": '\\]', "display": True},
+        #{"left": "$", "right": "$", "display": False},
+    ]
 
-            # Create output path
-            output_filename = f"page_{page_number + 1}.pdf"
-            output_path = os.path.join(temp_dir, output_filename)
-
-            # Write the page to a new PDF file
-            with open(output_path, 'wb') as output_file:
-                writer.write(output_file)
-
-            print(f"Page {page_number + 1} saved as {output_path}")
-            paths.append(output_path)
-    return paths
-
-
-
-# Example usage
-pdf_path = "testpdf/transformers.pdf"
-temp_directory = split_pdf_to_temp_files(pdf_path)
-print(f"All pages have been saved to {temp_directory}")
-
-
-markdown_content = ""
-for file_path in temp_directory:
-    print("processing file: ", file_path, "/", len(temp_directory))
-
+with gr.Blocks() as demo:  
+    chatbot = gr.Chatbot(
+        type="messages", 
+        latex_delimiters = latex_delimiters_set,
+        show_copy_button = True,
+        #editable = "all",
+        scale = 0
+        )
     
-    with torch.amp.autocast("cuda") and torch.inference_mode():
-        tmp_result = converter.convert(file_path)
-        print(f"-- file converted")
-
-        markdown_content += tmp_result.document.export_to_markdown()
-        print(f"-- markdown content added")
+    msg = gr.Textbox(
+        placeholder="Enter your message here"
+        )
     
+    msg.submit(chat, [msg, chatbot], chatbot, queue=False)
 
-
-markdown_content = markdown_content.replace("\n \n", "\n").replace("\n\n", "\n")
-with open("testpdf/transformers.txt", "w") as f:
-    f.write(markdown_content)
+demo.launch()
