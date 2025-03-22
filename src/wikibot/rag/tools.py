@@ -46,8 +46,7 @@ class WikiFile:
         
         self.converter = DocumentConverter(format_options={
             InputFormat.PDF: PdfFormatOption(
-                pipeline_options=self.pipeline_options,
-                backend=DoclingParseV4DocumentBackend,
+                pipeline_options=self.pipeline_options
                 )
         })  
 
@@ -80,6 +79,7 @@ class WikiFile:
                 self.load_texts(texts_path)
             return True
         return False
+    
     def load_embeddings(self, embeddings_path):
         self.embeddings = np.load(embeddings_path)
     
@@ -197,7 +197,7 @@ class WikiFile:
         if self.is_processed():
             print(f"PDF {self.pdf_path} has already been processed. Skipping.")
             return
-        self.split_pdf_to_temp_files()
+        self.paths = [self.pdf_path]
         self.create_markwdon()
         self.split_markdown()
 
