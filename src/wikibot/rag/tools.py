@@ -22,7 +22,7 @@ class WikiFile:
 
     METADATA_FILE = 'processed_wikifiles.json'
     
-    def __init__(self, pdf_path):
+    def __init__(self, pdf_path, do_formula_enrichment:bool = True):
 
         self.metadata = self.load_metadata()
 
@@ -41,7 +41,7 @@ class WikiFile:
             num_threads=8, 
             device=AcceleratorDevice.CUDA
         )
-        self.pipeline_options.do_formula_enrichment = True
+        self.pipeline_options.do_formula_enrichment = do_formula_enrichment
         self.pipeline_options.code_formula_batch_size = 2
         
         self.converter = DocumentConverter(format_options={
@@ -111,28 +111,33 @@ class WikiFile:
         # Create a temporary directory
         temp_dir = tempfile.mkdtemp()
         print(f"Temporary directory created: {temp_dir}")
-        paths = []	
+        paths = []
+
         # Open the PDF file
         with open(self.pdf_path, 'rb') as file:
-            # Read the PDF file
             reader = PdfReader(file)
             num_pages = len(reader.pages)
 
-            # Iterate through each page and save it as a separate PDF
-            for page_number in range(num_pages):
+            # Split PDF into sections of 10 pages
+            for start_page in range(0, num_pages, 10):
                 writer = PdfWriter()
-                writer.add_page(reader.pages[page_number])
+
+                # Add up to 10 pages to the current section
+                for page_number in range(start_page, min(start_page + 10, num_pages)):
+                    writer.add_page(reader.pages[page_number])
 
                 # Create output path
-                output_filename = f"page_{page_number + 1}.pdf"
+                output_filename = f"section_{(start_page // 10) + 1}.pdf"
                 output_path = os.path.join(temp_dir, output_filename)
 
-                # Write the page to a new PDF file
+                # Write the section to a new PDF file
                 with open(output_path, 'wb') as output_file:
                     writer.write(output_file)
 
-                print(f"Page {page_number + 1} saved as {output_path}")
-                self.paths.append(output_path)
+                print(f"Section {(start_page // 10) + 1} saved as {output_path}")
+                paths.append(output_path)
+
+        self.paths = paths
 
     def create_markwdon(self):
         self.markdown_content = ""
@@ -197,7 +202,8 @@ class WikiFile:
         if self.is_processed():
             print(f"PDF {self.pdf_path} has already been processed. Skipping.")
             return
-        self.paths = [self.pdf_path]
+        # self.paths = [self.pdf_path]
+        self.split_pdf_to_temp_files()
         self.create_markwdon()
         self.split_markdown()
 

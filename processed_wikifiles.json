@@ -5,5 +5,19 @@
         "faiss_index_path": "procesado_tfns_faiss_index.bin",
         "embeddings_path": "procesado_tfns_embeddings.npy",
         "texts_path": "procesado_tfns_texts.json"
+    },
+    "testpdf/Algebra Lineal Capitulo 4.pdf": {
+        "checksum": "cb73091e69a26e37aa1f7a9b5188dd66e62e59643dc0032ac6184e9a68d2af5b",
+        "processed_at": 1742562600.873626,
+        "faiss_index_path": "None_faiss_index.bin",
+        "embeddings_path": "None_embeddings.npy",
+        "texts_path": "None_texts.json"
+    },
+    "testpdf/tst.pdf": {
+        "checksum": "9b5c812603899f8e5619b5f3887a9fd6a401b181d045b8c2f9c93e1b9a9eb447",
+        "processed_at": 1742626359.1963682,
+        "faiss_index_path": "None_faiss_index.bin",
+        "embeddings_path": "None_embeddings.npy",
+        "texts_path": "None_texts.json"
     }
 }
